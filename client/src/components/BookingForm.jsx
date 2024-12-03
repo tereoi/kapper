@@ -12,6 +12,7 @@ const BookingForm = () => {
   });
   const [workingDates, setWorkingDates] = useState([]);
   const [availableTimes, setAvailableTimes] = useState([]);
+  
 
   // Haal werkdagen op wanneer component laadt
   useEffect(() => {
@@ -165,8 +166,7 @@ const BookingForm = () => {
             >
               <option value="">Selecteer een service</option>
               <option value="Knippen">Knippen</option>
-              <option value="Knippen en föhnen">Knippen en föhnen</option>
-              <option value="Kleuren">Kleuren</option>
+              <option value="Knippen en baard">Knippen en baard</option>
             </select>
           </div>
         </div>
