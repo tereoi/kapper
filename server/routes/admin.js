@@ -68,4 +68,21 @@ router.delete('/working-hours/:date', async (req, res) => {
     }
 });
 
+router.put('/working-hours/:date', async (req, res) => {
+    try {
+        const workingHours = await WorkingHours.findOne({
+            where: { date: req.params.date }
+        });
+
+        if (workingHours) {
+            await workingHours.update(req.body);
+            res.json(workingHours);
+        } else {
+            res.status(404).json({ message: 'Werktijden niet gevonden' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 module.exports = router;

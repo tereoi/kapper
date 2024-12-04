@@ -6,20 +6,22 @@ const WorkingHours = require('../models/WorkingHours');
 // Helper functie voor tijdsloten
 function generateTimeSlots(start, end) {
   const slots = [];
-  let currentTime = start;
+  let current = start;
   
-  while (currentTime < end) {
-    slots.push(currentTime);
-    const [hours, minutes] = currentTime.split(':').map(Number);
-    let newMinutes = minutes + 15;
-    let newHours = hours;
-    
-    if (newMinutes >= 60) {
-      newMinutes = 0;
-      newHours += 1;
-    }
-    
-    currentTime = `${String(newHours).padStart(2, '0')}:${String(newMinutes).padStart(2, '0')}`;
+  // Convert end time to be 30 minutes before actual end time
+  const [endHours, endMinutes] = end.split(':').map(Number);
+  let totalEndMinutes = endHours * 60 + endMinutes - 30;
+  end = `${String(Math.floor(totalEndMinutes / 60)).padStart(2, '0')}:${String(totalEndMinutes % 60).padStart(2, '0')}`;
+
+  while (current <= end) {
+    slots.push(current);
+    // Add 30 minutes
+    const [hours, minutes] = current.split(':').map(Number);
+    let totalMinutes = hours * 60 + minutes + 30;
+    const newHours = Math.floor(totalMinutes / 60);
+    const newMinutes = totalMinutes % 60;
+    current = `${String(newHours).padStart(2, '0')}:${String(newMinutes).padStart(2, '0')}`;
+    if (current > end) break;
   }
   
   return slots;
