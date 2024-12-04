@@ -18,12 +18,25 @@ app.use(express.json());
 
 // Routes
 app.use('/api/appointments', appointmentRoutes);
-app.use('/api/appointments', appointmentRoutes);
 app.use('/api/admin', adminRoutes);
 
-// Sync database
-sequelize.sync({ alter: true }).then(() => {
+// Sync database and create admin account
+sequelize.sync({ alter: true }).then(async () => {
     console.log('Database synchronized');
+    
+    // Create admin account if it doesn't exist
+    try {
+        const admin = await Admin.findOne({ where: { username: 'admin' } });
+        if (!admin) {
+            await Admin.create({
+                username: 'admin',
+                password: 'admin123'
+            });
+            console.log('Admin account created');
+        }
+    } catch (error) {
+        console.error('Error creating admin account:', error);
+    }
 }).catch(err => {
     console.error('Error syncing database:', err);
 });
