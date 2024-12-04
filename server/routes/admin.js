@@ -53,17 +53,19 @@ router.get('/working-hours', async (req, res) => {
 });
 
 // Werktijd verwijderen
-router.delete('/working-hours/:id', async (req, res) => {
+router.delete('/working-hours/:date', async (req, res) => {
     try {
-      const workingHours = await WorkingHours.findByPk(req.params.id);
-      if (!workingHours) {
-        return res.status(404).json({ message: 'Werktijden niet gevonden' });
-      }
-      await workingHours.destroy();
-      res.json({ message: 'Werktijden verwijderd' });
+        const workingHours = await WorkingHours.findOne({
+            where: { date: req.params.date }
+        });
+        if (!workingHours) {
+            return res.status(404).json({ message: 'Werktijden niet gevonden' });
+        }
+        await workingHours.destroy();
+        res.json({ message: 'Werktijden verwijderd' });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
-  });
+});
 
 module.exports = router;

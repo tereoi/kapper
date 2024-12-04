@@ -1,0 +1,13 @@
+
+Short term:
+1. Kapper alleen om het kwartier kunnen laten beginnen
+2. Klant alleen in kunnen laten plannen elk half uur van begin tot eindtijd
+3. Als de klant iets in heeft gepland haal je die tijd eruit zodat er geen andere klant ook in kan plannen op dezelfe tijd.
+4. Als een klant zijn afspraak wordt verwijderd moet die tijd weer gekozen kunnen worden door een nieuwe klant.
+5. Oude afspraken en tijden automatisch verwijderen zodat db niet vol raakt.
+
+Long term: 
+1. Webapp online zetten met domeinnaam
+2. Eigen scherm maken zodat ik kan zien hoeveel klanten er geweest zijn en hoeveel ik betaald moet krijgen.
+3. Kapper melding als er een afspraak is ingepland.
+4. Op telefoon testen.
