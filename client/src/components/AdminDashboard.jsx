@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Calendar, Trash2, Clock, Mail, Phone, User, ChevronLeft, ChevronRight } from 'lucide-react';
 import WorkingHoursManager from './WorkingHoursManager';
+import DeleteConfirmationDialog from './DeleteConfirmationDialog';
 
 const AdminDashboard = () => {
   const [appointments, setAppointments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [selectedAppointmentId, setSelectedAppointmentId] = useState(null);
 
   useEffect(() => {
     fetchAppointments();
@@ -112,7 +115,10 @@ const AdminDashboard = () => {
                           <span className="text-white font-medium">{appointment.time}</span>
                         </div>
                         <button
-                          onClick={() => deleteAppointment(appointment.id)}
+                          onClick={() => {
+                            setSelectedAppointmentId(appointment.id);
+                            setIsDeleteDialogOpen(true);
+                          }}
                           className="text-red-400 opacity-0 group-hover:opacity-100 transform translate-x-2 
                             group-hover:translate-x-0 transition-all duration-300 hover:text-red-300"
                         >
@@ -145,6 +151,16 @@ const AdminDashboard = () => {
           )}
         </div>
       </div>
+
+      <DeleteConfirmationDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={() => {
+          setIsDeleteDialogOpen(false);
+          setSelectedAppointmentId(null);
+        }}
+        appointmentId={selectedAppointmentId}
+        onDelete={() => deleteAppointment(selectedAppointmentId)}
+      />
     </div>
   );
 };

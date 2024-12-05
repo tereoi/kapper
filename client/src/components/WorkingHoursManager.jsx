@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Clock, Plus, X, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
+import DeleteConfirmationDialog from './DeleteConfirmationDialog';
 
 const WorkingHoursManager = () => {
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
@@ -10,6 +11,8 @@ const WorkingHoursManager = () => {
   const [breakEnd, setBreakEnd] = useState('');
   const [workingHours, setWorkingHours] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [deleteAction, setDeleteAction] = useState(null);
 
   const generateTimeOptions = () => {
     const times = [];
@@ -166,66 +169,102 @@ const WorkingHoursManager = () => {
     }
   };
 
-  const removeBreak = async (breakIndex) => {
-    try {
-      const workingDay = workingHours.find(day => day.date === selectedDate);
-      if (!workingDay) return;
+  const handleDeleteBreak = async (breakIndex) => {
+    setDeleteAction(() => async () => {
+      try {
+        const workingDay = workingHours.find(day => day.date === selectedDate);
+        if (!workingDay) return;
 
-      const updatedBreaks = workingDay.breaks.filter((_, index) => index !== breakIndex);
-      
-      // Regenerate all time slots
-      let slots = [];
-      let current = workingDay.startTime;
-      while (current <= workingDay.endTime) {
-        slots.push(current);
-        const [hours, minutes] = current.split(':').map(Number);
-        let totalMinutes = hours * 60 + minutes + 30;
-        const newHours = Math.floor(totalMinutes / 60);
-        const newMinutes = totalMinutes % 60;
-        current = `${String(newHours).padStart(2, '0')}:${String(newMinutes).padStart(2, '0')}`;
-        if (current > workingDay.endTime) break;
-      }
+        const updatedBreaks = workingDay.breaks.filter((_, index) => index !== breakIndex);
+        
+        // Regenerate all time slots
+        let slots = [];
+        let current = workingDay.startTime;
+        while (current <= workingDay.endTime) {
+          slots.push(current);
+          const [hours, minutes] = current.split(':').map(Number);
+          let totalMinutes = hours * 60 + minutes + 30;
+          const newHours = Math.floor(totalMinutes / 60);
+          const newMinutes = totalMinutes % 60;
+          current = `${String(newHours).padStart(2, '0')}:${String(newMinutes).padStart(2, '0')}`;
+          if (current > workingDay.endTime) break;
+        }
 
-      // Filter out remaining break times
-      const breakTimeSlots = updatedBreaks.flatMap(breakTime => {
-        return slots.filter(slot => {
-          const slotParts = slot.split(':').map(Number);
-          const slotMinutes = slotParts[0] * 60 + slotParts[1];
-          
-          const startParts = breakTime.startTime.split(':').map(Number);
-          const startMinutes = startParts[0] * 60 + startParts[1];
-          
-          const endParts = breakTime.endTime.split(':').map(Number);
-          const endMinutes = endParts[0] * 60 + endParts[1];
-          
-          return slotMinutes >= startMinutes && slotMinutes < endMinutes;
+        // Filter out remaining break times
+        const breakTimeSlots = updatedBreaks.flatMap(breakTime => {
+          return slots.filter(slot => {
+            const slotParts = slot.split(':').map(Number);
+            const slotMinutes = slotParts[0] * 60 + slotParts[1];
+            
+            const startParts = breakTime.startTime.split(':').map(Number);
+            const startMinutes = startParts[0] * 60 + startParts[1];
+            
+            const endParts = breakTime.endTime.split(':').map(Number);
+            const endMinutes = endParts[0] * 60 + endParts[1];
+            
+            return slotMinutes >= startMinutes && slotMinutes < endMinutes;
+          });
         });
-      });
 
-      const updatedTimeSlots = slots.filter(time => !breakTimeSlots.includes(time));
+        const updatedTimeSlots = slots.filter(time => !breakTimeSlots.includes(time));
 
-      await axios.put(`http://localhost:3001/api/admin/working-hours/${selectedDate}`, {
-        ...workingDay,
-        breaks: updatedBreaks,
-        availableTimeSlots: updatedTimeSlots
-      });
+        await axios.put(`http://localhost:3001/api/admin/working-hours/${selectedDate}`, {
+          ...workingDay,
+          breaks: updatedBreaks,
+          availableTimeSlots: updatedTimeSlots
+        });
 
-      fetchWorkingHours();
-    } catch (error) {
-      console.error('Error removing break:', error);
-    }
+        fetchWorkingHours();
+      } catch (error) {
+        console.error('Error removing break:', error);
+      }
+    });
+    setIsDeleteDialogOpen(true);
   };
 
-  const removeWorkingHours = async (date) => {
-    setIsLoading(true);
-    try {
-      await axios.delete(`http://localhost:3001/api/admin/working-hours/${date}`);
-      fetchWorkingHours();
-    } catch (error) {
-      console.error('Error removing working hours:', error);
-    } finally {
-      setIsLoading(false);
-    }
+  const handleDeleteTimeSlot = async (date, time) => {
+    setDeleteAction(() => async () => {
+      setIsLoading(true);
+      try {
+        const workingDay = workingHours.find(day => day.date === date);
+        if (!workingDay) return;
+
+        const updatedTimeSlots = workingDay.availableTimeSlots.filter(t => t !== time);
+        
+        if (updatedTimeSlots.length > 0) {
+          await axios.put(`http://localhost:3001/api/admin/working-hours/${date}`, {
+            ...workingDay,
+            startTime: updatedTimeSlots[0],
+            endTime: updatedTimeSlots[updatedTimeSlots.length - 1],
+            availableTimeSlots: updatedTimeSlots
+          });
+        } else {
+          await handleDeleteWorkingHours(date);
+        }
+        
+        fetchWorkingHours();
+      } catch (error) {
+        console.error('Error removing time slot:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    });
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleDeleteWorkingHours = async (date) => {
+    setDeleteAction(() => async () => {
+      setIsLoading(true);
+      try {
+        await axios.delete(`http://localhost:3001/api/admin/working-hours/${date}`);
+        fetchWorkingHours();
+      } catch (error) {
+        console.error('Error removing working hours:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    });
+    setIsDeleteDialogOpen(true);
   };
 
   const navigateDay = (direction) => {
@@ -239,33 +278,6 @@ const WorkingHoursManager = () => {
     const months = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
     const date = new Date(dateString);
     return `${days[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
-  };
-
-  const removeTimeSlot = async (date, timeToRemove) => {
-    setIsLoading(true);
-    try {
-      const workingDay = workingHours.find(day => day.date === date);
-      if (!workingDay) return;
-
-      const updatedTimeSlots = workingDay.availableTimeSlots.filter(time => time !== timeToRemove);
-      
-      if (updatedTimeSlots.length > 0) {
-        await axios.put(`http://localhost:3001/api/admin/working-hours/${date}`, {
-          ...workingDay,
-          startTime: updatedTimeSlots[0],
-          endTime: updatedTimeSlots[updatedTimeSlots.length - 1],
-          availableTimeSlots: updatedTimeSlots
-        });
-      } else {
-        await removeWorkingHours(date);
-      }
-      
-      fetchWorkingHours();
-    } catch (error) {
-      console.error('Error removing time slot:', error);
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   const timeOptions = generateTimeOptions();
@@ -283,7 +295,6 @@ const WorkingHoursManager = () => {
   };
 
   const filteredTimeOptions = getFilteredTimeOptions();
-
 
   return (
     <div className="bg-slate-800/50 backdrop-blur-lg rounded-xl p-6 shadow-xl border border-purple-500/20">
@@ -400,7 +411,7 @@ const WorkingHoursManager = () => {
                     {breakTime.startTime} - {breakTime.endTime}
                   </span>
                   <button
-                    onClick={() => removeBreak(index)}
+                    onClick={() => handleDeleteBreak(index)}
                     className="text-red-400 hover:text-red-300 transition-colors duration-300"
                   >
                     <X size={14} />
@@ -421,7 +432,7 @@ const WorkingHoursManager = () => {
                   {selectedDayHours.startTime} - {selectedDayHours.endTime}
                 </span>
                 <button
-                  onClick={() => removeWorkingHours(selectedDate)}
+                  onClick={() => handleDeleteWorkingHours(selectedDate)}
                   className="text-red-400 hover:text-red-300 transition-colors duration-300"
                 >
                   <Trash2 size={18} />
@@ -437,7 +448,7 @@ const WorkingHoursManager = () => {
                 >
                   <span className="text-purple-300">{time}</span>
                   <button
-                    onClick={() => removeTimeSlot(selectedDate, time)}
+                    onClick={() => handleDeleteTimeSlot(selectedDate, time)}
                     className="text-purple-400 hover:text-red-300 transition-colors duration-300"
                   >
                     <X size={14} />
@@ -452,8 +463,21 @@ const WorkingHoursManager = () => {
           </div>
         )}
       </div>
+
+      <DeleteConfirmationDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={() => {
+          setIsDeleteDialogOpen(false);
+          setDeleteAction(null);
+        }}
+        onDelete={async () => {
+          await deleteAction();
+          setIsDeleteDialogOpen(false);
+          setDeleteAction(null);
+        }}
+      />
     </div>
-);
+  );
 };
 
 export default WorkingHoursManager;

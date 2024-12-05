@@ -85,4 +85,19 @@ router.put('/working-hours/:date', async (req, res) => {
     }
 });
 
+router.post('/verify-password', async (req, res) => {
+    try {
+      const { password } = req.body;
+      const admin = await Admin.findOne({ where: { username: 'admin' } });
+      
+      if (admin && admin.password === password) {
+        res.json({ success: true });
+      } else {
+        res.json({ success: false });
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+
 module.exports = router;
