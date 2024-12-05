@@ -1,4 +1,3 @@
-
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db');
 
@@ -19,6 +18,10 @@ const WorkingHours = sequelize.define('WorkingHours', {
       type: DataTypes.ARRAY(DataTypes.STRING),
       defaultValue: []
     },
+    breaks: {
+      type: DataTypes.ARRAY(DataTypes.JSONB),
+      defaultValue: []
+    },
     isHoliday: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
@@ -27,6 +30,6 @@ const WorkingHours = sequelize.define('WorkingHours', {
       type: DataTypes.INTEGER,
       defaultValue: 1
     }
-  });
+});
 
 module.exports = WorkingHours;
