@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Clock, Plus, X, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Clock, Plus, X, Trash2 } from 'lucide-react';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog';
 
-const WorkingHoursManager = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+const WorkingHoursManager = ({ selectedDate }) => {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [breakStart, setBreakStart] = useState('');
@@ -14,21 +13,9 @@ const WorkingHoursManager = () => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [deleteAction, setDeleteAction] = useState(null);
 
-  const generateTimeOptions = () => {
-    const times = [];
-    for (let hour = 0; hour < 24; hour++) {
-      for (let minute = 0; minute < 60; minute += 30) {
-        times.push(
-          `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`
-        );
-      }
-    }
-    return times;
-  };
-
   useEffect(() => {
     fetchWorkingHours();
-  }, []);
+  }, [selectedDate]);
 
   const fetchWorkingHours = async () => {
     try {
@@ -267,17 +254,16 @@ const WorkingHoursManager = () => {
     setIsDeleteDialogOpen(true);
   };
 
-  const navigateDay = (direction) => {
-    const date = new Date(selectedDate);
-    date.setDate(date.getDate() + direction);
-    setSelectedDate(date.toISOString().split('T')[0]);
-  };
-
-  const formatDate = (dateString) => {
-    const days = ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'];
-    const months = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
-    const date = new Date(dateString);
-    return `${days[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+  const generateTimeOptions = () => {
+    const times = [];
+    for (let hour = 0; hour < 24; hour++) {
+      for (let minute = 0; minute < 60; minute += 30) {
+        times.push(
+          `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`
+        );
+      }
+    }
+    return times;
   };
 
   const timeOptions = generateTimeOptions();
@@ -293,32 +279,9 @@ const WorkingHoursManager = () => {
       time < existingStart || time > existingEnd
     );
   };
-
-  const filteredTimeOptions = getFilteredTimeOptions();
-
   return (
-    <div className="bg-slate-800/50 backdrop-blur-lg rounded-xl p-6 shadow-xl border border-purple-500/20">
-      <h3 className="text-xl font-semibold text-white mb-4">Werkdagen & Tijden Beheer</h3>
-      
-      <div className="flex items-center justify-between mb-6">
-        <button
-          onClick={() => navigateDay(-1)}
-          className="p-2 bg-slate-700/50 text-white rounded-lg hover:bg-slate-600/50 
-            transition-all duration-300 border border-purple-500/30"
-        >
-          <ChevronLeft size={24} />
-        </button>
-        <span className="text-white font-medium min-w-[200px] text-center">
-          {formatDate(selectedDate)}
-        </span>
-        <button
-          onClick={() => navigateDay(1)}
-          className="p-2 bg-slate-700/50 text-white rounded-lg hover:bg-slate-600/50 
-            transition-all duration-300 border border-purple-500/30"
-        >
-          <ChevronRight size={24} />
-        </button>
-      </div>
+    <div className="bg-white/[0.03] rounded-2xl p-6 border border-white/[0.08]">
+      <h3 className="text-xl font-semibold text-white mb-6">Werkdagen & Tijden Beheer</h3>
       
       <div className="space-y-4 mb-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -328,11 +291,11 @@ const WorkingHoursManager = () => {
               setStartTime(e.target.value);
               setEndTime('');
             }}
-            className="px-4 py-2 bg-slate-700/50 text-white border border-purple-500/30 rounded-lg 
-              focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+            className="px-4 py-2 bg-white/[0.05] text-white border border-white/[0.08] rounded-xl 
+              focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
           >
             <option value="">Start tijd</option>
-            {filteredTimeOptions.map((time) => (
+            {getFilteredTimeOptions().map((time) => (
               <option key={`start-${time}`} value={time}>
                 {time}
               </option>
@@ -341,11 +304,11 @@ const WorkingHoursManager = () => {
           <select
             value={endTime}
             onChange={(e) => setEndTime(e.target.value)}
-            className="px-4 py-2 bg-slate-700/50 text-white border border-purple-500/30 rounded-lg 
-              focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+            className="px-4 py-2 bg-white/[0.05] text-white border border-white/[0.08] rounded-xl 
+              focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
           >
             <option value="">Eind tijd</option>
-            {filteredTimeOptions
+            {getFilteredTimeOptions()
               .filter(time => time > startTime)
               .map((time) => (
                 <option key={`end-${time}`} value={time}>
@@ -356,8 +319,8 @@ const WorkingHoursManager = () => {
           <button
             onClick={addWorkingHours}
             disabled={isLoading || !startTime || !endTime}
-            className="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg
-              hover:from-purple-500 hover:to-indigo-500 transition-all duration-300 disabled:opacity-50
+            className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl
+              hover:from-blue-600 hover:to-blue-700 transition-all duration-300 disabled:opacity-50
               disabled:cursor-not-allowed transform hover:scale-[1.02]"
           >
             Tijden toevoegen
@@ -392,8 +355,10 @@ const WorkingHoursManager = () => {
           </select>
           <button
             onClick={addBreak}
-            className="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg
-              hover:from-purple-500 hover:to-indigo-500 transition-all duration-300"
+            disabled={!breakStart || !breakEnd}
+            className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl
+              hover:from-blue-600 hover:to-blue-700 transition-all duration-300 disabled:opacity-50
+              disabled:cursor-not-allowed transform hover:scale-[1.02]"
           >
             Pauze toevoegen
           </button>

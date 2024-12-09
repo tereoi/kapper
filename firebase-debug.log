@@ -1,0 +1,33 @@
+[debug] [2024-12-09T15:50:53.700Z] ----------------------------------------------------------------------
+[debug] [2024-12-09T15:50:53.702Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\troyc\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2024-12-09T15:50:53.702Z] CLI Version:   13.28.0
+[debug] [2024-12-09T15:50:53.702Z] Platform:      win32
+[debug] [2024-12-09T15:50:53.702Z] Node Version:  v20.14.0
+[debug] [2024-12-09T15:50:53.702Z] Time:          Mon Dec 09 2024 16:50:53 GMT+0100 (Midden-Europese standaardtijd)
+[debug] [2024-12-09T15:50:53.702Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-12-09T15:50:53.706Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-12-09T15:50:53.706Z] > authorizing via signed-in user (troycoenradie@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\troyc\Pictures\Werk\code\Issie\hairdresser
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2024-12-09T15:52:10.273Z] Checked if tokens are valid: true, expires at: 1733762903889
+[debug] [2024-12-09T15:52:10.273Z] Checked if tokens are valid: true, expires at: 1733762903889
+[debug] [2024-12-09T15:52:10.274Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=100
+[debug] [2024-12-09T15:52:10.773Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
+[debug] [2024-12-09T15:52:10.773Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]

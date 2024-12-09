@@ -60,58 +60,72 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="space-y-8 max-w-6xl mx-auto">
-      <div className="bg-slate-800/50 backdrop-blur-lg rounded-xl p-6 shadow-xl border border-purple-500/20">
+    <div className="relative z-20 max-w-4xl mx-auto">
+      <div className="bg-black/40 backdrop-blur-xl rounded-3xl p-8 border border-white/[0.06] shadow-xl">
         <h2 className="text-2xl font-bold text-white mb-6">Admin Dashboard</h2>
-        <div className="mb-8">
-          <WorkingHoursManager />
-        </div>
-
-        <div className="mt-12">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-semibold text-white">Dagplanning</h3>
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => navigateDay(-1)}
-                className="p-2 bg-slate-700/50 text-white rounded-lg hover:bg-slate-600/50 
-                  transition-all duration-300 border border-purple-500/30"
-              >
-                <ChevronLeft size={24} />
-              </button>
-              <span className="text-white font-medium min-w-[200px] text-center">
-                {formatDate(selectedDate)}
-              </span>
-              <button
-                onClick={() => navigateDay(1)}
-                className="p-2 bg-slate-700/50 text-white rounded-lg hover:bg-slate-600/50 
-                  transition-all duration-300 border border-purple-500/30"
-              >
-                <ChevronRight size={24} />
-              </button>
-            </div>
+        
+        {/* Combined Date Navigation */}
+        <div className="flex items-center justify-between mb-6">
+          <button
+            onClick={() => navigateDay(-1)}
+            className="p-2 bg-white/[0.05] text-white rounded-xl hover:bg-white/[0.08] 
+              transition-all duration-300 border border-white/[0.08]"
+          >
+            <ChevronLeft size={24} />
+          </button>
+          <div className="flex items-center gap-4">
+            <span className="text-white font-medium">
+              {formatDate(selectedDate)}
+            </span>
+            <button
+              onClick={() => setSelectedDate(new Date().toISOString().split('T')[0])}
+              className="px-4 py-1.5 bg-white/[0.05] text-white rounded-xl hover:bg-white/[0.08] 
+                transition-all duration-300 border border-white/[0.08] text-sm"
+            >
+              Vandaag
+            </button>
           </div>
+          <button
+            onClick={() => navigateDay(1)}
+            className="p-2 bg-white/[0.05] text-white rounded-xl hover:bg-white/[0.08] 
+              transition-all duration-300 border border-white/[0.08]"
+          >
+            <ChevronRight size={24} />
+          </button>
+        </div>
+  
+        {/* Working Hours Manager */}
+        <div className="mb-8">
+          <WorkingHoursManager 
+            selectedDate={selectedDate} 
+          />
+        </div>
+  
+        {/* Appointments Section */}
+        <div className="mt-8">
+          <h3 className="text-xl font-semibold text-white mb-6">Dagplanning</h3>
           
           {isLoading ? (
             <div className="flex justify-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-2 border-purple-500 border-t-transparent"></div>
+              <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
             </div>
           ) : (
-            <div className="bg-slate-700/30 rounded-xl p-6 border border-purple-500/20">
+            <div className="space-y-4">
               {getDayAppointments().length === 0 ? (
-                <div className="text-gray-400 text-center py-8">
+                <div className="text-white/60 text-center py-8 bg-white/[0.03] rounded-2xl border border-white/[0.08]">
                   Geen afspraken voor deze dag
                 </div>
               ) : (
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-4 md:grid-cols-2">
                   {getDayAppointments().map((appointment) => (
                     <div
                       key={appointment.id}
-                      className="bg-slate-800/50 rounded-xl p-4 border border-purple-500/20
-                        hover:border-purple-500/40 transition-all duration-300 group"
+                      className="bg-white/[0.03] rounded-2xl p-6 border border-white/[0.08]
+                        hover:bg-white/[0.05] transition-all duration-300 group"
                     >
-                      <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center space-x-2">
-                          <Clock className="w-5 h-5 text-purple-400" />
+                          <Clock className="w-5 h-5 text-blue-400" />
                           <span className="text-white font-medium">{appointment.time}</span>
                         </div>
                         <button
@@ -126,20 +140,20 @@ const AdminDashboard = () => {
                         </button>
                       </div>
                       
-                      <div className="space-y-2 text-gray-300">
-                        <div className="flex items-center space-x-2">
-                          <User className="w-4 h-4 text-purple-400" />
+                      <div className="space-y-3">
+                        <div className="flex items-center space-x-2 text-white/80">
+                          <User className="w-4 h-4 text-blue-400" />
                           <span>{appointment.name}</span>
                         </div>
-                        <div className="flex items-center space-x-2">
-                          <Mail className="w-4 h-4 text-purple-400" />
+                        <div className="flex items-center space-x-2 text-white/80">
+                          <Mail className="w-4 h-4 text-blue-400" />
                           <span>{appointment.email}</span>
                         </div>
-                        <div className="flex items-center space-x-2">
-                          <Phone className="w-4 h-4 text-purple-400" />
+                        <div className="flex items-center space-x-2 text-white/80">
+                          <Phone className="w-4 h-4 text-blue-400" />
                           <span>{appointment.phone}</span>
                         </div>
-                        <div className="mt-2 px-3 py-1 bg-purple-500/20 rounded-full text-purple-300 text-sm inline-block">
+                        <div className="mt-3 px-3 py-1 bg-blue-500/10 rounded-full text-blue-400 text-sm inline-block">
                           {appointment.service}
                         </div>
                       </div>
@@ -151,7 +165,7 @@ const AdminDashboard = () => {
           )}
         </div>
       </div>
-
+  
       <DeleteConfirmationDialog
         isOpen={isDeleteDialogOpen}
         onClose={() => {
