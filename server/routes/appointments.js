@@ -1,8 +1,10 @@
+// server/routes/appointments.js
 const express = require('express');
 const router = express.Router();
 const Appointment = require('../models/Appointment');
 const WorkingHours = require('../models/WorkingHours');
 const { Op } = require('sequelize');
+const googleCalendarService = require('../services/googleCalendarService');
 
 function generateTimeSlots(start, end) {
   const slots = [];
@@ -20,6 +22,7 @@ function generateTimeSlots(start, end) {
   return slots;
 }
 
+// Get all appointments
 router.get('/', async (req, res) => {
   try {
     const appointments = await Appointment.findAll();
@@ -29,21 +32,68 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Create new appointment with Google Calendar integration
 router.post('/', async (req, res) => {
   try {
+    // Check if timeslot is available
+    const existingAppointment = await Appointment.findOne({
+      where: { date: req.body.date, time: req.body.time }
+    });
+
+    if (existingAppointment) {
+      return res.status(400).json({ 
+        message: 'Dit tijdslot is al geboekt' 
+      });
+    }
+
+    // Save appointment to database
     const appointment = await Appointment.create(req.body);
-    res.status(201).json(appointment);
+
+    try {
+      // Create Google Calendar event
+      const calendarEvent = await googleCalendarService.createAppointment({
+        ...req.body,
+        id: appointment.id
+      });
+
+      // Update appointment with Calendar event ID
+      await appointment.update({ 
+        calendarEventId: calendarEvent.id
+      });
+
+      res.status(201).json({
+        appointment,
+        calendarEvent
+      });
+    } catch (calendarError) {
+      console.error('Google Calendar sync failed:', calendarError);
+      res.status(201).json({
+        appointment,
+        calendarError: 'Afspraak is gemaakt maar niet gesynchroniseerd met Google Calendar'
+      });
+    }
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
+// Delete appointment
 router.delete('/:id', async (req, res) => {
   try {
     const appointment = await Appointment.findByPk(req.params.id);
     if (!appointment) {
       return res.status(404).json({ message: 'Afspraak niet gevonden' });
     }
+
+    // Delete from Google Calendar first if event ID exists
+    if (appointment.calendarEventId) {
+      try {
+        await googleCalendarService.deleteCalendarEvent(appointment.calendarEventId);
+      } catch (calendarError) {
+        console.error('Error deleting calendar event:', calendarError);
+      }
+    }
+
     await appointment.destroy();
     res.json({ message: 'Afspraak verwijderd' });
   } catch (error) {
@@ -51,6 +101,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+// Get available times for a specific date
 router.get('/available-times/:date', async (req, res) => {
   try {
     const workingHours = await WorkingHours.findOne({
@@ -65,11 +116,13 @@ router.get('/available-times/:date', async (req, res) => {
       });
     }
 
+    // Get all appointments for this date
     const bookedTimes = await Appointment.findAll({
       where: { date: req.params.date },
       attributes: ['time']
     });
 
+    // Calculate break times
     const breakTimeSlots = workingHours.breaks?.flatMap(breakTime => {
       return workingHours.availableTimeSlots.filter(slot => {
         const slotParts = slot.split(':').map(Number);
@@ -94,15 +147,22 @@ router.get('/available-times/:date', async (req, res) => {
         return (aHours * 60 + aMinutes) - (bHours * 60 + bMinutes);
       });
 
+    // If there are available timeslots, return them
     res.json({
-      available: true,
+      available: availableSlots.length > 0,
       times: availableSlots
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('Error in available-times:', error);
+    res.status(500).json({ 
+      message: error.message,
+      available: false,
+      times: []
+    });
   }
 });
 
+// Get appointments within date range
 router.get('/range', async (req, res) => {
   try {
     const { startDate, endDate } = req.query;
@@ -120,6 +180,7 @@ router.get('/range', async (req, res) => {
   }
 });
 
+// Update appointment
 router.put('/:id', async (req, res) => {
   try {
     const appointment = await Appointment.findByPk(req.params.id);
@@ -133,6 +194,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+// Check timeslot availability
 router.post('/check-availability', async (req, res) => {
   try {
     const { date, time } = req.body;

@@ -14,21 +14,47 @@ const BookingForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [workingDates, setWorkingDates] = useState([]);
   const [availableTimes, setAvailableTimes] = useState([]);
+  const [appointments, setAppointments] = useState([]);
   const [isFormVisible, setIsFormVisible] = useState(true);
   const [isBooked, setIsBooked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    fetchWorkingDates();
+    fetchWorkingHours();
+    fetchAppointments();
   }, []);
 
-  const fetchWorkingDates = async () => {
+  const fetchWorkingHours = async () => {
     try {
       const response = await axios.get('http://localhost:3001/api/admin/working-hours');
-      setWorkingDates(response.data.map(day => day.date));
+      setWorkingDates(response.data.map(day => ({
+        date: day.date,
+        isHoliday: day.isHoliday,
+        maxAppointments: day.maxAppointments
+      })));
     } catch (error) {
       console.error('Error fetching working dates:', error);
     }
+  };
+
+  const fetchAppointments = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/api/appointments');
+      setAppointments(response.data);
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+    }
+  };
+
+  const isDateFullyBooked = (date) => {
+    const workingDate = workingDates.find(day => day.date === date);
+    if (!workingDate) return 'closed';
+  
+    if (workingDate.isHoliday) return 'closed';
+  
+    // Check of er beschikbare tijden zijn voor deze datum
+    const hasAvailableTimes = availableTimes && availableTimes.length > 0;
+    return hasAvailableTimes ? 'available' : 'full';
   };
 
   const handleDateChange = async (e) => {
@@ -124,33 +150,33 @@ const BookingForm = () => {
   ];
 
   const renderField = (field) => {
-if (field.type === "service-select") {
-  return (
-    <div className="space-y-3 mb-6">
-      <label className="text-sm text-white/80 font-medium">
-        Service
-      </label>
-      {field.options.map((option) => (
-        <button
-          key={option.value}
-          type="button"
-          onClick={() => setFormData({ ...formData, service: option.value })}
-          className={`w-full p-4 rounded-2xl border transition-all duration-300
-            ${formData.service === option.value
-              ? 'border-blue-500/30 bg-blue-500/10 text-white'
-              : 'border-white/[0.08] bg-white/[0.05] text-white/80 hover:bg-white/[0.08]'
-            }
-          `}
-        >
-          <div className="flex items-center space-x-3">
-            <Scissors className="w-5 h-5" />
-            <span className="font-medium">{option.value}</span>
-          </div>
-        </button>
-      ))}
-    </div>
-  );
-}
+    if (field.type === "service-select") {
+      return (
+        <div className="space-y-3 mb-6">
+          <label className="text-sm text-white/80 font-medium">
+            Service
+          </label>
+          {field.options.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              onClick={() => setFormData({ ...formData, service: option.value })}
+              className={`w-full p-4 rounded-2xl border transition-all duration-300
+                ${formData.service === option.value
+                  ? 'border-blue-500/30 bg-blue-500/10 text-white'
+                  : 'border-white/[0.08] bg-white/[0.05] text-white/80 hover:bg-white/[0.08]'
+                }
+              `}
+            >
+              <div className="flex items-center space-x-3">
+                <Scissors className="w-5 h-5" />
+                <span className="font-medium">{option.value}</span>
+              </div>
+            </button>
+          ))}
+        </div>
+      );
+    }
 
     if (field.type === "time-select") {
       return (
@@ -284,6 +310,37 @@ if (field.type === "service-select") {
                 <div key={index}>{renderField(field)}</div>
               ))}
             </div>
+
+            {/* Booking Availability Message */}
+            {formData.date && (
+              <div className="mt-4">
+                {(() => {
+                  const dateStatus = isDateFullyBooked(formData.date);
+                  switch (dateStatus) {
+                    case 'closed':
+                      return (
+                        <div className="bg-red-500/10 text-red-500 px-4 py-2 rounded-lg">
+                          Helaas zijn we gesloten op deze datum.
+                        </div>
+                      );
+                    case 'full':
+                      return (
+                        <div className="bg-red-500/10 text-red-500 px-4 py-2 rounded-lg">
+                          Sorry, we zitten helemaal vol op deze datum.
+                        </div>
+                      );
+                    case 'available':
+                      return (
+                        <div className="bg-green-500/10 text-green-500 px-4 py-2 rounded-lg">
+                          Er zijn nog plekken beschikbaar op deze datum.
+                        </div>
+                      );
+                    default:
+                      return null;
+                  }
+                })()}
+              </div>
+            )}
           </div>
 
           {/* Navigation */}
@@ -313,7 +370,12 @@ if (field.type === "service-select") {
             ) : (
               <button
                 type="submit"
-                disabled={!isFormComplete() || isLoading}
+                disabled={
+                  !isFormComplete() || 
+                  isLoading || 
+                  !availableTimes || 
+                  availableTimes.length === 0
+                }
                 className="ml-auto flex items-center space-x-2 px-5 py-2.5 rounded-xl
                   bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 
                   transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"

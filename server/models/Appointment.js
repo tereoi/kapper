@@ -1,3 +1,4 @@
+// server/models/Appointment.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db');
 
@@ -25,6 +26,10 @@ const Appointment = sequelize.define('Appointment', {
     service: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    calendarEventId: { 
+        type: DataTypes.STRING,
+        allowNull: true
     }
 });
 
