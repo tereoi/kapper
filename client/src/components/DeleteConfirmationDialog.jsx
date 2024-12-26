@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import config from '../config';
 import axios from 'axios';
 
 const DeleteConfirmationDialog = ({ isOpen, onClose, appointmentId, onDelete }) => {
@@ -12,7 +13,7 @@ const DeleteConfirmationDialog = ({ isOpen, onClose, appointmentId, onDelete }) 
     
     try {
       // First verify password
-      const verifyResponse = await axios.post('http://localhost:3001/api/admin/verify-password', {
+      const verifyResponse = await axios.post(config.endpoints.admin.verifyPassword, {
         password
       });
       

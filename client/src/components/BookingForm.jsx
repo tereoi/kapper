@@ -27,7 +27,7 @@ const BookingForm = () => {
 
   const fetchWorkingHours = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/admin/working-hours');
+      const response = await axios.get(config.endpoints.admin.workingHours);
       setWorkingDates(response.data.map(day => ({
         date: day.date,
         isHoliday: day.isHoliday,
@@ -40,7 +40,7 @@ const BookingForm = () => {
 
   const fetchAppointments = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/appointments');
+      const response = await axios.get(config.endpoints.appointments);
       setAppointments(response.data);
     } catch (error) {
       console.error('Error fetching appointments:', error);

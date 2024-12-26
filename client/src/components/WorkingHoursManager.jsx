@@ -74,7 +74,7 @@ const WorkingHoursManager = ({ selectedDate }) => {
             return (aHours * 60 + aMinutes) - (bHours * 60 + bMinutes);
           });
 
-        await axios.put(`http://localhost:3001/api/admin/working-hours/${selectedDate}`, {
+        await axios.put(`${config.endpoints.admin.workingHours}/${selectedDate}`, {
           date: selectedDate,
           startTime: allSlots[0],
           endTime: allSlots[allSlots.length - 1],
@@ -143,7 +143,7 @@ const WorkingHoursManager = ({ selectedDate }) => {
 
       const updatedTimeSlots = slots.filter(time => !breakTimeSlots.includes(time));
 
-      await axios.put(`http://localhost:3001/api/admin/working-hours/${selectedDate}`, {
+      await axios.put(`${config.endpoints.admin.workingHours}/${selectedDate}`, {
         ...workingDay,
         breaks: updatedBreaks,
         availableTimeSlots: updatedTimeSlots
@@ -196,7 +196,7 @@ const WorkingHoursManager = ({ selectedDate }) => {
 
         const updatedTimeSlots = slots.filter(time => !breakTimeSlots.includes(time));
 
-        await axios.put(`http://localhost:3001/api/admin/working-hours/${selectedDate}`, {
+        await axios.put(`${config.endpoints.admin.workingHours}/${selectedDate}`, {
           ...workingDay,
           breaks: updatedBreaks,
           availableTimeSlots: updatedTimeSlots
@@ -220,7 +220,7 @@ const WorkingHoursManager = ({ selectedDate }) => {
         const updatedTimeSlots = workingDay.availableTimeSlots.filter(t => t !== time);
         
         if (updatedTimeSlots.length > 0) {
-          await axios.put(`http://localhost:3001/api/admin/working-hours/${date}`, {
+          await axios.put(`${config.endpoints.admin.workingHours}/${date}`, {
             ...workingDay,
             startTime: updatedTimeSlots[0],
             endTime: updatedTimeSlots[updatedTimeSlots.length - 1],

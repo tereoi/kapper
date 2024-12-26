@@ -1,7 +1,7 @@
 // src/config.js
 const getBaseUrl = () => {
     if (process.env.NODE_ENV === 'production') {
-      return 'https://ezcuts.nl';
+      return 'https://kapper.onrender.com';
     }
     return 'http://localhost:3001';
   };
