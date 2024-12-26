@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { User, Lock, LogIn } from 'lucide-react';
+import { config } from '../config';
 
 const AdminLogin = ({ onLoginSuccess }) => {
   const [loginData, setLoginData] = useState({
@@ -29,7 +30,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
     setError('');
     
     try {
-      const response = await axios.post('http://localhost:3001/api/admin/login', loginData);
+      const response = await axios.post(config.endpoints.admin.login, loginData);
       if (response.data.success) {
         const element = document.querySelector('.login-form');
         element.classList.add('scale-0', 'opacity-0');

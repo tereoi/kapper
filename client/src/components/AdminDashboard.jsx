@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Calendar, Trash2, Clock, Mail, Phone, User, ChevronLeft, ChevronRight } from 'lucide-react';
 import WorkingHoursManager from './WorkingHoursManager';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog';
+import { config } from '../config';
 
 const AdminDashboard = () => {
   const [appointments, setAppointments] = useState([]);
@@ -18,7 +19,7 @@ const AdminDashboard = () => {
   const fetchAppointments = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('http://localhost:3001/api/appointments');
+      const response = await axios.get(config.endpoints.appointments);
       setAppointments(response.data);
     } catch (error) {
       console.error('Error fetching appointments:', error);
@@ -29,7 +30,7 @@ const AdminDashboard = () => {
 
   const deleteAppointment = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/api/appointments/${id}`);
+      await axios.delete(`${config.endpoints.appointments}/${id}`);
       setAppointments(appointments.filter((appointment) => appointment.id !== id));
     } catch (error) {
       console.error('Error deleting appointment:', error);

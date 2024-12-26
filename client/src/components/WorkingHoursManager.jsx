@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Clock, Plus, X, Trash2 } from 'lucide-react';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog';
+import { config } from '../config';
 
 const WorkingHoursManager = ({ selectedDate }) => {
   const [startTime, setStartTime] = useState('');
@@ -19,7 +20,7 @@ const WorkingHoursManager = ({ selectedDate }) => {
 
   const fetchWorkingHours = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/admin/working-hours');
+      const response = await axios.get(config.endpoints.admin.workingHours);
       setWorkingHours(response.data);
     } catch (error) {
       console.error('Error fetching working hours:', error);
@@ -95,7 +96,7 @@ const WorkingHoursManager = ({ selectedDate }) => {
           if (current > endTime) break;
         }
 
-        await axios.post('http://localhost:3001/api/admin/working-hours', {
+        await axios.post(config.endpoints.admin.workingHours, {
           date: selectedDate,
           startTime,
           endTime,
@@ -243,7 +244,7 @@ const WorkingHoursManager = ({ selectedDate }) => {
     setDeleteAction(() => async () => {
       setIsLoading(true);
       try {
-        await axios.delete(`http://localhost:3001/api/admin/working-hours/${date}`);
+        await axios.delete(`${config.endpoints.admin.workingHours}/${date}`);
         fetchWorkingHours();
       } catch (error) {
         console.error('Error removing working hours:', error);

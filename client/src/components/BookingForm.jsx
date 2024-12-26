@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Calendar, Clock, Mail, Phone, User, Scissors, ChevronRight } from 'lucide-react';
+import { config } from '../config';
 
 const BookingForm = () => {
   const [formData, setFormData] = useState({
@@ -62,7 +63,7 @@ const BookingForm = () => {
     setFormData({ ...formData, date: selectedDate, time: '' });
 
     try {
-      const response = await axios.get(`http://localhost:3001/api/appointments/available-times/${selectedDate}`);
+      const response = await axios.get(`${config.endpoints.appointments}/available-times/${selectedDate}`);
       setAvailableTimes(response.data.times || []);
     } catch (error) {
       console.error('Error fetching available times:', error);
@@ -81,7 +82,7 @@ const BookingForm = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await axios.post('http://localhost:3001/api/appointments', formData);
+      await axios.post(config.endpoints.appointments, formData);
       setIsFormVisible(false);
       setTimeout(() => {
         setIsBooked(true);
