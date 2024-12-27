@@ -1,0 +1,157 @@
+{"level":"info","message":{"duration":36.99000000000524,"method":"GET","path":"/working-hours","status":200},"timestamp":"2024-12-27T15:16:59.817Z"}
+{"level":"info","message":{"duration":0.08699999999953434,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:16:59.818Z"}
+{"level":"info","message":{"duration":37.54880000000412,"method":"GET","path":"/","status":200},"timestamp":"2024-12-27T15:16:59.820Z"}
+{"level":"info","message":{"duration":0.005499999999301508,"name":"GET /"},"timestamp":"2024-12-27T15:16:59.821Z"}
+{"level":"info","message":{"duration":0.5849000000016531,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:16:59.823Z"}
+{"level":"info","message":{"duration":3.040999999997439,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:16:59.824Z"}
+{"level":"info","message":{"duration":0.00990000000456348,"name":"GET /"},"timestamp":"2024-12-27T15:16:59.824Z"}
+{"level":"info","message":{"duration":0.009899999990011565,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:16:59.824Z"}
+{"level":"info","message":{"duration":6.642099999997299,"method":"POST","path":"/login","status":200},"timestamp":"2024-12-27T15:17:09.857Z"}
+{"level":"info","message":{"duration":0.017900000006193295,"name":"POST /login"},"timestamp":"2024-12-27T15:17:09.857Z"}
+{"level":"info","message":{"duration":0.34799999999813735,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:17:10.402Z"}
+{"level":"info","message":{"duration":0.20829999999841675,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:17:10.403Z"}
+{"level":"info","message":{"duration":0.07790000000386499,"name":"GET /"},"timestamp":"2024-12-27T15:17:10.403Z"}
+{"level":"info","message":{"duration":0.0038000000058673322,"name":"GET /"},"timestamp":"2024-12-27T15:17:10.403Z"}
+{"level":"info","message":{"duration":1.4281999999948312,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:17:10.405Z"}
+{"level":"info","message":{"duration":0.004300000000512227,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:17:10.405Z"}
+{"level":"info","message":{"duration":0.9927000000025146,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:17:10.407Z"}
+{"level":"info","message":{"duration":0.004500000010011718,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:17:10.407Z"}
+{"level":"info","message":{"duration":0.3669999999983702,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:18:06.161Z"}
+{"level":"info","message":{"duration":0.0087000000057742,"name":"GET /"},"timestamp":"2024-12-27T15:18:06.161Z"}
+{"level":"info","message":{"duration":0.23250000001280569,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:18:06.162Z"}
+{"level":"info","message":{"duration":0.004700000019511208,"name":"GET /"},"timestamp":"2024-12-27T15:18:06.163Z"}
+{"level":"info","message":{"duration":25.97849999999744,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:18:06.186Z"}
+{"level":"info","message":{"duration":0.005999999993946403,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:18:06.186Z"}
+{"level":"info","message":{"duration":0.9772999999986496,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:18:06.188Z"}
+{"level":"info","message":{"duration":0.005499999999301508,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:18:06.188Z"}
+{"level":"info","message":{"duration":5.947700000018813,"method":"GET","path":"/available-times/2024-12-27","status":200},"timestamp":"2024-12-27T15:18:10.967Z"}
+{"level":"info","message":{"duration":0.010199999989708886,"name":"GET /available-times/2024-12-27"},"timestamp":"2024-12-27T15:18:10.967Z"}
+{"level":"info","message":{"duration":0.3403000000107568,"method":"POST","path":"/","status":200},"timestamp":"2024-12-27T15:18:12.842Z"}
+{"level":"info","message":{"duration":0.01009999998495914,"name":"POST /"},"timestamp":"2024-12-27T15:18:12.842Z"}
+{"level":"info","message":{"duration":131.94390000001295,"method":"POST","path":"/login","status":200},"timestamp":"2024-12-27T15:18:33.885Z"}
+{"level":"info","message":{"duration":0.007100000017089769,"name":"POST /login"},"timestamp":"2024-12-27T15:18:33.885Z"}
+{"level":"info","message":{"duration":0.4415000000153668,"method":"GET","path":"/","status":200},"timestamp":"2024-12-27T15:18:34.394Z"}
+{"level":"info","message":{"duration":0.00890000001527369,"name":"GET /"},"timestamp":"2024-12-27T15:18:34.394Z"}
+{"level":"info","message":{"duration":2.393599999981234,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:18:34.395Z"}
+{"level":"info","message":{"duration":0.005400000023655593,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:18:34.395Z"}
+{"level":"info","message":{"duration":0.2901000000128988,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:18:34.396Z"}
+{"level":"info","message":{"duration":0.004599999985657632,"name":"GET /"},"timestamp":"2024-12-27T15:18:34.396Z"}
+{"level":"info","message":{"duration":0.9490999999979977,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:18:34.397Z"}
+{"level":"info","message":{"duration":0.004599999985657632,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:18:34.397Z"}
+{"level":"info","message":{"duration":0.2835999999952037,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:18:36.566Z"}
+{"level":"info","message":{"duration":1.638600000005681,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:18:36.566Z"}
+{"level":"info","message":{"duration":0.007999999972525984,"name":"GET /"},"timestamp":"2024-12-27T15:18:36.566Z"}
+{"level":"info","message":{"duration":0.004099999991012737,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:18:36.566Z"}
+{"level":"info","message":{"duration":0.2532000000064727,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:18:36.567Z"}
+{"level":"info","message":{"duration":0.003599999996367842,"name":"GET /"},"timestamp":"2024-12-27T15:18:36.567Z"}
+{"level":"info","message":{"duration":1.2057999999960884,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:18:36.568Z"}
+{"level":"info","message":{"duration":0.005399999994551763,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:18:36.569Z"}
+{"level":"info","message":{"duration":1.047099999996135,"method":"POST","path":"/login","status":200},"timestamp":"2024-12-27T15:18:42.935Z"}
+{"level":"info","message":{"duration":0.007599999982630834,"name":"POST /login"},"timestamp":"2024-12-27T15:18:42.935Z"}
+{"level":"info","message":{"duration":1.413299999985611,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:18:43.450Z"}
+{"level":"info","message":{"duration":0.25909999999566935,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:18:43.451Z"}
+{"level":"info","message":{"duration":0.009799999999813735,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:18:43.451Z"}
+{"level":"info","message":{"duration":0.004100000020116568,"name":"GET /"},"timestamp":"2024-12-27T15:18:43.451Z"}
+{"level":"info","message":{"duration":0.2445000000006985,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:18:43.453Z"}
+{"level":"info","message":{"duration":1.9587000000174157,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:18:43.453Z"}
+{"level":"info","message":{"duration":0.0046999999904073775,"name":"GET /"},"timestamp":"2024-12-27T15:18:43.453Z"}
+{"level":"info","message":{"duration":0.004899999999906868,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:18:43.453Z"}
+{"level":"info","message":{"duration":0.32310000000870787,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:18:56.897Z"}
+{"level":"info","message":{"duration":0.014300000009825453,"name":"GET /"},"timestamp":"2024-12-27T15:18:56.897Z"}
+{"level":"info","message":{"duration":0.204600000026403,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:18:56.897Z"}
+{"level":"info","message":{"duration":0.003700000001117587,"name":"GET /"},"timestamp":"2024-12-27T15:18:56.898Z"}
+{"level":"info","message":{"duration":28.875499999994645,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:18:56.924Z"}
+{"level":"info","message":{"duration":0.00930000000516884,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:18:56.925Z"}
+{"level":"info","message":{"duration":0.9914999999746215,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:18:56.926Z"}
+{"level":"info","message":{"duration":0.005700000008800998,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:18:56.926Z"}
+{"level":"info","message":{"duration":3.52190000002156,"method":"POST","path":"/login","status":200},"timestamp":"2024-12-27T15:19:03.274Z"}
+{"level":"info","message":{"duration":0.009200000000419095,"name":"POST /login"},"timestamp":"2024-12-27T15:19:03.274Z"}
+{"level":"info","message":{"duration":1.2511999999987893,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:19:03.786Z"}
+{"level":"info","message":{"duration":0.2210999999952037,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:19:03.787Z"}
+{"level":"info","message":{"duration":0.008999999990919605,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:19:03.787Z"}
+{"level":"info","message":{"duration":0.003499999991618097,"name":"GET /"},"timestamp":"2024-12-27T15:19:03.787Z"}
+{"level":"info","message":{"duration":0.2569999999832362,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:19:03.788Z"}
+{"level":"info","message":{"duration":1.6332999999867752,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:19:03.789Z"}
+{"level":"info","message":{"duration":0.0037999999767635018,"name":"GET /"},"timestamp":"2024-12-27T15:19:03.789Z"}
+{"level":"info","message":{"duration":0.004099999991012737,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:19:03.789Z"}
+{"level":"info","message":{"duration":1.3381999999983236,"method":"POST","path":"/verify-password","status":200},"timestamp":"2024-12-27T15:19:08.017Z"}
+{"level":"info","message":{"duration":0.008999999990919605,"name":"POST /verify-password"},"timestamp":"2024-12-27T15:19:08.017Z"}
+{"level":"info","message":{"duration":4.423999999999069,"method":"DELETE","path":"/working-hours/2024-12-27","status":200},"timestamp":"2024-12-27T15:19:08.023Z"}
+{"level":"info","message":{"duration":0.005199999985052273,"name":"DELETE /working-hours/2024-12-27"},"timestamp":"2024-12-27T15:19:08.023Z"}
+{"level":"info","message":{"duration":1.3510999999998603,"method":"GET","path":"/working-hours","status":200},"timestamp":"2024-12-27T15:19:08.026Z"}
+{"level":"info","message":{"duration":0.005600000004051253,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:19:08.026Z"}
+{"level":"info","message":{"duration":1.0892999999923632,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:19:10.157Z"}
+{"level":"info","message":{"duration":0.00969999999506399,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:19:10.157Z"}
+{"level":"info","message":{"duration":1.0740999999979977,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:19:10.798Z"}
+{"level":"info","message":{"duration":0.009799999999813735,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:19:10.798Z"}
+{"level":"info","message":{"duration":1.143500000005588,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:19:11.845Z"}
+{"level":"info","message":{"duration":0.012300000002142042,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:19:11.845Z"}
+{"level":"info","message":{"duration":1.6401000000187196,"method":"POST","path":"/verify-password","status":200},"timestamp":"2024-12-27T15:19:13.954Z"}
+{"level":"info","message":{"duration":0.008800000010523945,"name":"POST /verify-password"},"timestamp":"2024-12-27T15:19:13.954Z"}
+{"level":"info","message":{"duration":1.319099999993341,"method":"DELETE","path":"/working-hours/2024-12-28","status":200},"timestamp":"2024-12-27T15:19:13.956Z"}
+{"level":"info","message":{"duration":0.0037999999767635018,"name":"DELETE /working-hours/2024-12-28"},"timestamp":"2024-12-27T15:19:13.957Z"}
+{"level":"info","message":{"duration":0.6247000000148546,"method":"GET","path":"/working-hours","status":200},"timestamp":"2024-12-27T15:19:13.958Z"}
+{"level":"info","message":{"duration":0.004199999995762482,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:19:13.958Z"}
+{"level":"info","message":{"duration":1.0538999999989755,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:19:14.643Z"}
+{"level":"info","message":{"duration":0.00889999998616986,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:19:14.643Z"}
+{"level":"info","message":{"duration":0.865300000004936,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:19:14.821Z"}
+{"level":"info","message":{"duration":0.009799999999813735,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:19:14.821Z"}
+{"level":"info","message":{"duration":1.302800000004936,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:19:14.986Z"}
+{"level":"info","message":{"duration":0.008600000001024455,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:19:14.986Z"}
+{"level":"info","message":{"duration":1.2085000000079162,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:19:15.134Z"}
+{"level":"info","message":{"duration":0.0087000000057742,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:19:15.135Z"}
+{"level":"info","message":{"duration":0.9057000000029802,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:19:15.285Z"}
+{"level":"info","message":{"duration":0.0076000000117346644,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:19:15.285Z"}
+{"level":"info","message":{"duration":1.409700000018347,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:19:16.392Z"}
+{"level":"info","message":{"duration":0.011699999973643571,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:19:16.392Z"}
+{"level":"info","message":{"duration":0.3418999999994412,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:19:18.655Z"}
+{"level":"info","message":{"duration":0.0087000000057742,"name":"GET /"},"timestamp":"2024-12-27T15:19:18.655Z"}
+{"level":"info","message":{"duration":0.23149999999441206,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:19:18.657Z"}
+{"level":"info","message":{"duration":1.9847999999765307,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:19:18.658Z"}
+{"level":"info","message":{"duration":0.005800000042654574,"name":"GET /"},"timestamp":"2024-12-27T15:19:18.658Z"}
+{"level":"info","message":{"duration":0.004399999976158142,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:19:18.658Z"}
+{"level":"info","message":{"duration":0.6599000000278465,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:19:18.659Z"}
+{"level":"info","message":{"duration":0.005299999960698187,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:19:18.659Z"}
+{"level":"info","message":{"duration":0.283800000033807,"method":"GET","path":"/available-times/2024-12-27","status":304},"timestamp":"2024-12-27T15:19:22.018Z"}
+{"level":"info","message":{"duration":0.007800000021234155,"name":"GET /available-times/2024-12-27"},"timestamp":"2024-12-27T15:19:22.019Z"}
+{"level":"info","message":{"duration":1.2845000000088476,"method":"GET","path":"/available-times/2025-01-05","status":200},"timestamp":"2024-12-27T15:19:26.502Z"}
+{"level":"info","message":{"duration":0.009799999999813735,"name":"GET /available-times/2025-01-05"},"timestamp":"2024-12-27T15:19:26.502Z"}
+{"level":"info","message":{"duration":1.8711999999941327,"method":"GET","path":"/available-times/2025-01-17","status":200},"timestamp":"2024-12-27T15:19:28.474Z"}
+{"level":"info","message":{"duration":0.007400000002235174,"name":"GET /available-times/2025-01-17"},"timestamp":"2024-12-27T15:19:28.474Z"}
+{"level":"info","message":{"duration":1.2018999999854714,"method":"GET","path":"/available-times/2025-01-08","status":200},"timestamp":"2024-12-27T15:19:30.590Z"}
+{"level":"info","message":{"duration":0.00829999998677522,"name":"GET /available-times/2025-01-08"},"timestamp":"2024-12-27T15:19:30.590Z"}
+{"level":"info","message":{"duration":0.261800000036601,"method":"GET","path":"/available-times/2024-12-27","status":304},"timestamp":"2024-12-27T15:19:34.682Z"}
+{"level":"info","message":{"duration":0.009000000020023435,"name":"GET /available-times/2024-12-27"},"timestamp":"2024-12-27T15:19:34.682Z"}
+{"level":"info","message":{"duration":0.3037999999942258,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:19:37.110Z"}
+{"level":"info","message":{"duration":0.00889999995706603,"name":"GET /"},"timestamp":"2024-12-27T15:19:37.110Z"}
+{"level":"info","message":{"duration":1.818700000003446,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:19:37.110Z"}
+{"level":"info","message":{"duration":0.005700000037904829,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:19:37.111Z"}
+{"level":"info","message":{"duration":0.23910000000614673,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:19:37.111Z"}
+{"level":"info","message":{"duration":0.004500000039115548,"name":"GET /"},"timestamp":"2024-12-27T15:19:37.111Z"}
+{"level":"info","message":{"duration":1.1374000000068918,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:19:37.113Z"}
+{"level":"info","message":{"duration":0.004599999985657632,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:19:37.113Z"}
+{"level":"info","message":{"duration":0.24439999996684492,"method":"GET","path":"/available-times/2024-12-27","status":304},"timestamp":"2024-12-27T15:19:41.201Z"}
+{"level":"info","message":{"duration":0.008800000010523945,"name":"GET /available-times/2024-12-27"},"timestamp":"2024-12-27T15:19:41.202Z"}
+{"level":"info","message":{"heapTotal":67637248,"heapUsed":65197520,"rss":104869888,"type":"memory-usage"},"timestamp":"2024-12-27T15:19:53.538Z"}
+{"level":"info","message":{"duration":30.148699999961536,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:22:02.543Z"}
+{"level":"info","message":{"duration":0.006499999959487468,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:22:02.543Z"}
+{"level":"info","message":{"duration":29.833000000042375,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:22:02.544Z"}
+{"level":"info","message":{"duration":0.0038000000058673322,"name":"GET /"},"timestamp":"2024-12-27T15:22:02.544Z"}
+{"level":"info","message":{"duration":0.22020000003976747,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:22:02.545Z"}
+{"level":"info","message":{"duration":0.004599999985657632,"name":"GET /"},"timestamp":"2024-12-27T15:22:02.545Z"}
+{"level":"info","message":{"duration":1.4043999999994412,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:22:02.545Z"}
+{"level":"info","message":{"duration":0.006199999945238233,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:22:02.546Z"}
+{"level":"info","message":{"duration":0.21990000002551824,"method":"GET","path":"/available-times/2024-12-27","status":304},"timestamp":"2024-12-27T15:22:09.011Z"}
+{"level":"info","message":{"duration":0.00830000004498288,"name":"GET /available-times/2024-12-27"},"timestamp":"2024-12-27T15:22:09.011Z"}
+{"level":"info","message":{"duration":1.3491999999969266,"method":"GET","path":"/available-times/2024-12-28","status":200},"timestamp":"2024-12-27T15:22:11.334Z"}
+{"level":"info","message":{"duration":0.008399999991524965,"name":"GET /available-times/2024-12-28"},"timestamp":"2024-12-27T15:22:11.334Z"}
+{"level":"info","message":{"duration":3.5670999999856576,"method":"POST","path":"/login","status":200},"timestamp":"2024-12-27T15:22:15.237Z"}
+{"level":"info","message":{"duration":0.009000000020023435,"name":"POST /login"},"timestamp":"2024-12-27T15:22:15.237Z"}
+{"level":"info","message":{"duration":1.1441999999806285,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:22:15.750Z"}
+{"level":"info","message":{"duration":0.18819999997504056,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:22:15.751Z"}
+{"level":"info","message":{"duration":0.00969999999506399,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:22:15.751Z"}
+{"level":"info","message":{"duration":0.003599999996367842,"name":"GET /"},"timestamp":"2024-12-27T15:22:15.751Z"}
+{"level":"info","message":{"duration":0.25459999998565763,"method":"GET","path":"/","status":304},"timestamp":"2024-12-27T15:22:15.752Z"}
+{"level":"info","message":{"duration":1.3280999999842606,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-27T15:22:15.753Z"}
+{"level":"info","message":{"duration":0.004599999985657632,"name":"GET /"},"timestamp":"2024-12-27T15:22:15.753Z"}
+{"level":"info","message":{"duration":0.004199999966658652,"name":"GET /working-hours"},"timestamp":"2024-12-27T15:22:15.753Z"}
