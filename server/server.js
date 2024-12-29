@@ -17,6 +17,7 @@ const sequelize = require('./db');
 const appointmentRoutes = require('./routes/appointments');
 const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
+const managerRoutes = require('./routes/manager');
 
 // Import monitoring
 const { setupMonitoring } = require('./monitoring/performance');
@@ -62,6 +63,7 @@ setupMonitoring(app);
 app.use('/api/appointments', cacheMiddleware(300), appointmentRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/auth', authRoutes);
+app.use('/api/manager', managerRoutes); 
 
 // Error handling
 app.use(errorHandler);

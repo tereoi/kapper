@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 To do voor maandag:
 
 1. Afspraken 40 min lang maken.
@@ -5,8 +6,43 @@ To do voor maandag:
 3. Beheerder scherm maken zodat ik alle statistieken kan zien.
 4. Zorgen dat alles er perfect uitziet ook op telefoon.
 5. klant een email of sms versturen met de info
+=======
+Voor maandag:
+
+1. Afspraken en pauzes 40 min lang maken (let op dat deze goed in de google agenda komen te staan).
+    Alleen google agenda duren ze nog 1,5 uur.
+
+
+2. Afspraken (dag en tijd) kunnen verzetten.
+    Datum picker ziet er niet mooi uit op telefoon.
+
+
+3. Beheerder scherm maken zodat ik alles bij kan houden.
+    Stats werkend maken en account aanmaken in database.
+
+
+4. Design afmaken zodat het er op telefoon ook mooi uitziet. (geen lelijke witte knoppen etc).
+    Datumpicker tekst over icoon. Melding stap 2 nog te zienn bij stap 3 klant.
+
+
+5. Klant een mailtje sturen met verificatie en gegevens van de afspraak zelf (datum en tijd en soort behandeling).
+    Als hij aangemaakt/aangepast/verwijderd wordt moet er een mail komen. Geen google agenda mail.
+
+
+>>>>>>> try2
 
 
 Na maandag:
 
+<<<<<<< HEAD
 1. De klant een mail sturen 1 dag voor zijn afspraak voor reminder.
+=======
+1. sms verificatie.
+
+
+
+Issie koppelen:
+
+1. Google account koppelen voor agenda.
+2. Eigen gebruikersnaam en wachtwoord.
+>>>>>>> try2
