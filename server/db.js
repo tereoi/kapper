@@ -3,14 +3,11 @@ const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
   dialectOptions: {
-    // Only use SSL in production
-    ...(process.env.NODE_ENV === 'production' ? {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
-    } : {})
-  }
+    ssl: {
+      require: true,
+      rejectUnauthorized: false, // Laat dit aan staan om zelfondertekende certificaten te accepteren
+    },
+  },
 });
 
 async function testConnection() {
