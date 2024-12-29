@@ -32,3 +32,65 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.15);
 }
+
+/* Date Picker Styling */
+input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+  color: white;
+  font-size: 16px;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  min-height: 48px;
+  cursor: pointer;
+}
+
+input[type="date"]:focus {
+  outline: none;
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+/* Calendar Icon Styling */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.5;
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  padding: 0.2rem;
+  margin-right: 0.5rem;
+  transition: opacity 0.2s ease;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 0.8;
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+  input[type="date"] {
+    font-size: 16px;
+    padding: 1rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    height: 24px;
+    width: 24px;
+    padding: 0.5rem;
+  }
+}
+
+/* Firefox specific styles */
+@-moz-document url-prefix() {
+  input[type="date"] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.5em;
+  }
+}

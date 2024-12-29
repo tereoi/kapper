@@ -1,27 +1,23 @@
 Voor maandag:
 
 1. Afspraken en pauzes 40 min lang maken (let op dat deze goed in de google agenda komen te staan).
-    Alleen agenda checken
+    Alleen google agenda duren ze nog 1,5 uur.
 
 
 2. Afspraken (dag en tijd) kunnen verzetten.
-    Zorgen dat je op telefoon de icoontjes kan selecteren.
+    Datum picker ziet er niet mooi uit op telefoon.
 
 
 3. Beheerder scherm maken zodat ik alles bij kan houden.
-    Stats werkend maken.
+    Stats werkend maken en account aanmaken in database.
 
 
 4. Design afmaken zodat het er op telefoon ook mooi uitziet. (geen lelijke witte knoppen etc).
-    Gedaan
+    Datumpicker tekst over icoon. Melding stap 2 nog te zienn bij stap 3 klant.
 
 
 5. Klant een mailtje sturen met verificatie en gegevens van de afspraak zelf (datum en tijd en soort behandeling).
-    nog doen
-
-
-6. Zelf geen herinnering krijgen van de afspraak de klant wel.
-    nog doen
+    Als hij aangemaakt/aangepast/verwijderd wordt moet er een mail komen. Geen google agenda mail.
 
 
 
@@ -34,5 +30,5 @@ Na maandag:
 
 Issie koppelen:
 
-1. Google account koppelen
+1. Google account koppelen voor agenda.
 2. Eigen gebruikersnaam en wachtwoord.

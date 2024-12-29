@@ -1,3 +1,4 @@
+// services/googleCalendarService.js
 const { google } = require('googleapis');
 const { OAuth2 } = google.auth;
 
@@ -19,10 +20,9 @@ class GoogleCalendarService {
 
   async createAppointment(appointment) {
     try {
-      const duration = appointment.service === 'Knippen en baard' ? 45 : 30;
-      
+      // Set duration to 40 minutes for all appointments
       const startDateTime = `${appointment.date}T${appointment.time}:00`;
-      const endDateTime = new Date(new Date(startDateTime).getTime() + duration * 60000)
+      const endDateTime = new Date(new Date(startDateTime).getTime() + 40 * 60000)
         .toISOString();
 
       const event = {
@@ -69,10 +69,9 @@ class GoogleCalendarService {
 
   async updateCalendarEvent(eventId, appointment) {
     try {
-      const duration = appointment.service === 'Knippen en baard' ? 45 : 30;
-      
+      // Set duration to 40 minutes for updates as well
       const startDateTime = `${appointment.date}T${appointment.time}:00`;
-      const endDateTime = new Date(new Date(startDateTime).getTime() + duration * 60000)
+      const endDateTime = new Date(new Date(startDateTime).getTime() + 40 * 60000)
         .toISOString();
 
       const event = {
