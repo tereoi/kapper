@@ -6,11 +6,13 @@ const sequelize = require('./db');
 const appointmentRoutes = require('./routes/appointments');
 const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
+const managerRoutes = require('./routes/manager');
 
 // Import models
 const Appointment = require('./models/Appointment');
 const Admin = require('./models/Admin');
 const WorkingHours = require('./models/WorkingHours');
+
 
 const app = express();
 
@@ -37,6 +39,7 @@ app.use(session({
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/auth', authRoutes);
+app.use('/api/manager', managerRoutes); 
 
 // Health check route
 app.get('/health', (req, res) => {
