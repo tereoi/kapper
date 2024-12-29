@@ -1,4 +1,3 @@
-// server/routes/appointments.js
 // routes/appointments.js
 const express = require('express');
 const router = express.Router();
@@ -6,8 +5,9 @@ const Appointment = require('../models/Appointment');
 const WorkingHours = require('../models/WorkingHours');
 const { Op } = require('sequelize');
 const googleCalendarService = require('../services/googleCalendarService');
+const emailService = require('../services/emailService');
 
-// Bestaande GET route
+// Get all appointments
 router.get('/', async (req, res) => {
   try {
     const appointments = await Appointment.findAll();
@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Vereenvoudigde POST route
+// Create new appointment
 router.post('/', async (req, res) => {
   try {
     // Check if timeslot is available
@@ -46,15 +46,25 @@ router.post('/', async (req, res) => {
         calendarEventId: calendarEvent.id
       });
 
+      // Send confirmation email
+      await emailService.sendConfirmation(appointment);
+
       res.status(201).json({
         appointment,
         calendarEvent
       });
-    } catch (calendarError) {
-      console.error('Google Calendar sync failed:', calendarError);
+    } catch (error) {
+      console.error('Error:', error);
+      // If Google Calendar sync fails, still try to send confirmation email
+      try {
+        await emailService.sendConfirmation(appointment);
+      } catch (emailError) {
+        console.error('Email error:', emailError);
+      }
+      
       res.status(201).json({
         appointment,
-        calendarError: 'Afspraak is gemaakt maar niet gesynchroniseerd met Google Calendar'
+        error: 'Afspraak is gemaakt maar er waren problemen met de synchronisatie'
       });
     }
   } catch (error) {
@@ -70,13 +80,20 @@ router.delete('/:id', async (req, res) => {
       return res.status(404).json({ message: 'Afspraak niet gevonden' });
     }
 
-    // Delete from Google Calendar first if event ID exists
+    // Delete from Google Calendar if event ID exists
     if (appointment.calendarEventId) {
       try {
         await googleCalendarService.deleteCalendarEvent(appointment.calendarEventId);
       } catch (calendarError) {
         console.error('Error deleting calendar event:', calendarError);
       }
+    }
+
+    // Send cancellation email
+    try {
+      await emailService.sendCancellation(appointment);
+    } catch (emailError) {
+      console.error('Email error:', emailError);
     }
 
     await appointment.destroy();
@@ -132,7 +149,6 @@ router.get('/available-times/:date', async (req, res) => {
         return (aHours * 60 + aMinutes) - (bHours * 60 + bMinutes);
       });
 
-    // If there are available timeslots, return them
     res.json({
       available: availableSlots.length > 0,
       times: availableSlots
@@ -172,7 +188,33 @@ router.put('/:id', async (req, res) => {
     if (!appointment) {
       return res.status(404).json({ message: 'Afspraak niet gevonden' });
     }
+
+    // Save old details for email
+    const oldDate = appointment.date;
+    const oldTime = appointment.time;
+
+    // Update appointment
     await appointment.update(req.body);
+
+    // Update Google Calendar if event ID exists
+    if (appointment.calendarEventId) {
+      try {
+        await googleCalendarService.updateCalendarEvent(
+          appointment.calendarEventId,
+          appointment
+        );
+      } catch (calendarError) {
+        console.error('Calendar update error:', calendarError);
+      }
+    }
+
+    // Send update email
+    try {
+      await emailService.sendUpdate(appointment, oldDate, oldTime);
+    } catch (emailError) {
+      console.error('Email error:', emailError);
+    }
+
     res.json(appointment);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -225,6 +267,72 @@ router.post('/check-availability', async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+});
+
+// Reschedule appointment
+router.put('/:id/reschedule', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { date, time } = req.body;
+
+    // Check if new time is available
+    const existingAppointment = await Appointment.findOne({
+      where: {
+        date,
+        time,
+        id: { [Op.ne]: id }
+      }
+    });
+
+    if (existingAppointment) {
+      return res.status(400).json({
+        message: 'Dit tijdslot is al bezet'
+      });
+    }
+
+    const appointment = await Appointment.findByPk(id);
+    if (!appointment) {
+      return res.status(404).json({
+        message: 'Afspraak niet gevonden'
+      });
+    }
+
+    // Save old details for email
+    const oldDate = appointment.date;
+    const oldTime = appointment.time;
+
+    // Update appointment
+    await appointment.update({ date, time });
+
+    // Update Google Calendar if event ID exists
+    if (appointment.calendarEventId) {
+      try {
+        await googleCalendarService.updateCalendarEvent(
+          appointment.calendarEventId,
+          appointment
+        );
+      } catch (calendarError) {
+        console.error('Calendar update error:', calendarError);
+      }
+    }
+
+    // Send update email
+    try {
+      await emailService.sendUpdate(appointment, oldDate, oldTime);
+    } catch (emailError) {
+      console.error('Email error:', emailError);
+    }
+
+    res.json({
+      success: true,
+      appointment
+    });
+  } catch (error) {
+    console.error('Reschedule error:', error);
+    res.status(500).json({
+      message: 'Er ging iets mis bij het verzetten van de afspraak'
+    });
   }
 });
 
