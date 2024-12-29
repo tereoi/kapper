@@ -58,6 +58,12 @@ const BookingForm = () => {
     return hasAvailableTimes ? 'available' : 'full';
   };
 
+  const formatSelectedDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return format(date, 'EEEE d MMMM yyyy', { locale: nl });
+  };
+
   const handleDateChange = async (e) => {
     const selectedDate = e.target.value;
     setFormData({ ...formData, date: selectedDate, time: '' });
@@ -82,22 +88,68 @@ const BookingForm = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await axios.post(config.endpoints.appointments, formData);
-      setIsFormVisible(false);
-      setTimeout(() => {
-        setIsBooked(true);
-      }, 500);
+      // Format date if needed (ensure it's YYYY-MM-DD)
+      const formattedData = {
+        ...formData,
+        date: formData.date instanceof Date ? 
+          formData.date.toISOString().split('T')[0] : 
+          formData.date
+      };
+
+      const response = await axios.post(config.endpoints.appointments, formattedData);
+      
+      if (response.data) {
+        setIsFormVisible(false);
+        setTimeout(() => {
+          setIsBooked(true);
+        }, 500);
+      }
     } catch (error) {
-      alert('Er ging iets mis bij het maken van de afspraak');
+      console.error('Submission error:', error.response?.data || error);
+      if (error.response?.status === 400) {
+        alert(error.response.data.message || 'Dit tijdslot is niet meer beschikbaar');
+      } else {
+        alert('Er ging iets mis bij het maken van de afspraak. Probeer het later opnieuw.');
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
   const formSteps = [
-    // Personal Info
+    {
+      title: "Kies je behandeling",
+      subtitle: "Selecteer de gewenste service",
+      fields: [
+        {
+          name: "service",
+          type: "service-select",
+          options: [
+            { value: "Knippen", price: "€30", duration: "30 min" },
+            { value: "Knippen en baard", price: "€45", duration: "45 min" }
+          ]
+        }
+      ]
+    },
+    {
+      title: "Plan je afspraak",
+      subtitle: "Kies een datum en tijd",
+      fields: [
+        {
+          name: "date",
+          type: "date",
+          icon: <Calendar className="w-5 h-5" />
+        },
+        {
+          name: "time",
+          type: "time-select",
+          icon: <Clock className="w-5 h-5" />
+        }
+      ]
+    },
     {
       title: "Jouw gegevens",
+      subtitle: "Vul je contactgegevens in",
       fields: [
         {
           name: "name",
@@ -121,34 +173,9 @@ const BookingForm = () => {
           placeholder: "06 12345678"
         }
       ]
-    },
-    // Date & Service
-    {
-      title: "Kies een datum en service",
-      fields: [
-        {
-          name: "service",
-          type: "service-select",
-          options: [
-            { value: "Knippen" },
-            { value: "Knippen en baard" }
-          ]
-        },
-        {
-          name: "date",
-          label: "Datum",
-          type: "date",
-          icon: <Calendar className="w-5 h-5" />
-        },
-        {
-          name: "time",
-          label: "Tijd",
-          type: "time-select",
-          icon: <Clock className="w-5 h-5" />
-        }
-      ]
     }
   ];
+
 
   const renderField = (field) => {
     if (field.type === "service-select") {

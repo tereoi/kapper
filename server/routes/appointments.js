@@ -1,4 +1,5 @@
 // server/routes/appointments.js
+// routes/appointments.js
 const express = require('express');
 const router = express.Router();
 const Appointment = require('../models/Appointment');
@@ -6,23 +7,7 @@ const WorkingHours = require('../models/WorkingHours');
 const { Op } = require('sequelize');
 const googleCalendarService = require('../services/googleCalendarService');
 
-function generateTimeSlots(start, end) {
-  const slots = [];
-  let current = start;
-  
-  while (current <= end) {
-    slots.push(current);
-    const [hours, minutes] = current.split(':').map(Number);
-    let totalMinutes = hours * 60 + minutes + 30;
-    const newHours = Math.floor(totalMinutes / 60);
-    const newMinutes = totalMinutes % 60;
-    current = `${String(newHours).padStart(2, '0')}:${String(newMinutes).padStart(2, '0')}`;
-    if (current > end) break;
-  }
-  return slots;
-}
-
-// Get all appointments
+// Bestaande GET route
 router.get('/', async (req, res) => {
   try {
     const appointments = await Appointment.findAll();
@@ -32,7 +17,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Create new appointment with Google Calendar integration
+// Vereenvoudigde POST route
 router.post('/', async (req, res) => {
   try {
     // Check if timeslot is available
