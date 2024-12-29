@@ -1,19 +1,3 @@
-// db/index.js
-const { Sequelize } = require('sequelize');
-
-<<<<<<< HEAD
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: 'postgres',
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false
-    }
-  },
-  logging: process.env.NODE_ENV === 'development'
-});
-// Test de connectie
-=======
 let sequelize;
 
 // Check environment and configure database accordingly
@@ -35,7 +19,6 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
->>>>>>> try2
 async function testConnection() {
   try {
     await sequelize.authenticate();
