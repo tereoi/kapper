@@ -2,14 +2,11 @@
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false, // Use TLS
+  service: 'gmail',  // Specifiek 'gmail' gebruiken in plaats van host/port
   auth: {
-    type: 'login', // Expliciet LOGIN authenticatietype
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_APP_PASSWORD,
-  },
+    pass: process.env.EMAIL_APP_PASSWORD
+  }
 });
 
 const formatDate = (dateString) => {
@@ -18,6 +15,14 @@ const formatDate = (dateString) => {
   const date = new Date(dateString);
   return `${days[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
 };
+
+transporter.verify(function(error, success) {
+  if (error) {
+    console.error('Email service error:', error);
+  } else {
+    console.log('Email server is ready to take our messages');
+  }
+});
 
 const emailService = {
   async sendConfirmation(appointment) {
