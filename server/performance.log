@@ -247,3 +247,23 @@
 {"level":"info","message":{"heapTotal":65540096,"heapUsed":63282248,"rss":51171328,"type":"memory-usage"},"timestamp":"2024-12-30T15:59:42.727Z"}
 {"level":"info","message":{"heapTotal":65540096,"heapUsed":63473672,"rss":51671040,"type":"memory-usage"},"timestamp":"2024-12-30T16:04:42.735Z"}
 {"level":"info","message":{"heapTotal":65540096,"heapUsed":63665168,"rss":51888128,"type":"memory-usage"},"timestamp":"2024-12-30T16:09:42.737Z"}
+{"level":"info","message":{"heapTotal":64491520,"heapUsed":62213104,"rss":111058944,"type":"memory-usage"},"timestamp":"2024-12-30T16:16:58.948Z"}
+{"level":"info","message":{"duration":54.83239999995567,"method":"GET","path":"/working-hours","status":200},"timestamp":"2024-12-30T16:17:05.013Z"}
+{"level":"info","message":{"duration":0.09250000002793968,"name":"GET /working-hours"},"timestamp":"2024-12-30T16:17:05.013Z"}
+{"level":"info","message":{"duration":108.58390000002692,"method":"GET","path":"/","status":304},"timestamp":"2024-12-30T16:17:05.069Z"}
+{"level":"info","message":{"duration":0.007199999992735684,"name":"GET /"},"timestamp":"2024-12-30T16:17:05.069Z"}
+{"level":"info","message":{"duration":0.403699999966193,"method":"GET","path":"/","status":304},"timestamp":"2024-12-30T16:17:05.070Z"}
+{"level":"info","message":{"duration":0.00929999997606501,"name":"GET /"},"timestamp":"2024-12-30T16:17:05.070Z"}
+{"level":"info","message":{"duration":92.13299999997253,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-30T16:17:05.106Z"}
+{"level":"info","message":{"duration":0.009000000020023435,"name":"GET /working-hours"},"timestamp":"2024-12-30T16:17:05.106Z"}
+{"level":"info","message":{"duration":18.663600000028964,"method":"POST","path":"/login","status":200},"timestamp":"2024-12-30T16:17:13.618Z"}
+{"level":"info","message":{"duration":0.018999999971129,"name":"POST /login"},"timestamp":"2024-12-30T16:17:13.619Z"}
+{"level":"info","message":{"duration":0.2492000000202097,"method":"GET","path":"/","status":304},"timestamp":"2024-12-30T16:17:14.135Z"}
+{"level":"info","message":{"duration":0.014899999951012433,"name":"GET /"},"timestamp":"2024-12-30T16:17:14.135Z"}
+{"level":"info","message":{"duration":0.1737999999895692,"method":"GET","path":"/","status":304},"timestamp":"2024-12-30T16:17:14.136Z"}
+{"level":"info","message":{"duration":0.003599999996367842,"name":"GET /"},"timestamp":"2024-12-30T16:17:14.136Z"}
+{"level":"info","message":{"duration":14.716799999994691,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-30T16:17:14.149Z"}
+{"level":"info","message":{"duration":0.005800000042654574,"name":"GET /working-hours"},"timestamp":"2024-12-30T16:17:14.149Z"}
+{"level":"info","message":{"duration":35.29869999998482,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-30T16:17:14.185Z"}
+{"level":"info","message":{"duration":0.004599999985657632,"name":"GET /working-hours"},"timestamp":"2024-12-30T16:17:14.185Z"}
+{"level":"info","message":{"heapTotal":65802240,"heapUsed":63662728,"rss":112451584,"type":"memory-usage"},"timestamp":"2024-12-30T16:21:58.964Z"}

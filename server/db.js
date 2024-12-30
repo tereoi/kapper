@@ -1,39 +1,46 @@
 // db.js
 const { Sequelize } = require('sequelize');
 
-let sequelize;
+// Configure Sequelize with error handling
+const initializeDatabase = () => {
+  const databaseUrl = process.env.NODE_ENV === 'production' 
+    ? process.env.DATABASE_URL
+    : process.env.LOCAL_DATABASE_URL;
 
-function initializeDatabase() {
-  const databaseUrl = process.env.DATABASE_URL;
-  
   if (!databaseUrl) {
-    console.error('DATABASE_URL is not defined in environment variables');
-    throw new Error('Database URL not configured');
+    console.error('Database URL not found in environment variables');
+    process.exit(1);
   }
 
-  try {
-    sequelize = new Sequelize(databaseUrl, {
-      dialect: 'postgres',
-      dialectOptions: {
-        ssl: {
-          require: true,
-          rejectUnauthorized: false
-        }
-      },
-      logging: false,
-      pool: {
-        max: 5,
-        min: 0,
-        acquire: 30000,
-        idle: 10000
-      }
+  const sequelize = new Sequelize(databaseUrl, {
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: process.env.NODE_ENV === 'production' ? {
+        require: true,
+        rejectUnauthorized: false
+      } : false
+    },
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    },
+    logging: process.env.NODE_ENV === 'production' ? false : console.log
+  });
+
+  // Test the connection
+  sequelize
+    .authenticate()
+    .then(() => {
+      console.log('Database connection established successfully');
+    })
+    .catch(err => {
+      console.error('Unable to connect to the database:', err);
+      process.exit(1);
     });
-    
-    return sequelize;
-  } catch (error) {
-    console.error('Failed to initialize database:', error);
-    throw error;
-  }
-}
+
+  return sequelize;
+};
 
 module.exports = initializeDatabase();

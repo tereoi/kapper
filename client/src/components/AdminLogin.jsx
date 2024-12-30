@@ -30,19 +30,29 @@ const AdminLogin = ({ onLoginSuccess }) => {
     setError('');
     
     try {
-      const response = await axios.post(config.endpoints.admin.login, loginData);
+      // Add logging to debug the request
+      console.log('Attempting login at:', `${config.endpoints.admin.login}`);
+      
+      const response = await axios.post(config.endpoints.admin.login, loginData, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      console.log('Login response:', response.data);
+  
       if (response.data.success) {
-        const element = document.querySelector('.login-form');
-        element.classList.add('scale-0', 'opacity-0');
-        setTimeout(() => {
-          onLoginSuccess();
-        }, 500);
+        onLoginSuccess();
+      } else {
+        setError('Inloggen mislukt. Controleer je gegevens.');
+        const form = document.querySelector('.login-form');
+        form.classList.add('animate-shake');
+        setTimeout(() => form.classList.remove('animate-shake'), 500);
       }
     } catch (error) {
-      setError('Inloggen mislukt. Controleer je gegevens.');
-      const form = document.querySelector('.login-form');
-      form.classList.add('animate-shake');
-      setTimeout(() => form.classList.remove('animate-shake'), 500);
+      console.error('Login error details:', error.response || error);
+      setError(error.response?.data?.message || 'Er ging iets mis bij het inloggen.');
     } finally {
       setIsLoading(false);
     }
