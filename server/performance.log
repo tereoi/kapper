@@ -268,3 +268,13 @@
 {"level":"info","message":{"duration":0.004599999985657632,"name":"GET /working-hours"},"timestamp":"2024-12-30T16:17:14.185Z"}
 {"level":"info","message":{"heapTotal":65802240,"heapUsed":63662728,"rss":112451584,"type":"memory-usage"},"timestamp":"2024-12-30T16:21:58.964Z"}
 {"level":"info","message":{"heapTotal":64753664,"heapUsed":62291896,"rss":111374336,"type":"memory-usage"},"timestamp":"2024-12-30T16:37:36.518Z"}
+{"level":"info","message":{"duration":2.0797999999995227,"method":"GET","path":"/working-hours","status":401},"timestamp":"2024-12-30T16:56:04.024Z"}
+{"level":"info","message":{"duration":0.32620000000133587,"method":"GET","path":"/working-hours","status":401},"timestamp":"2024-12-30T16:56:04.026Z"}
+{"level":"info","message":{"duration":0.09509999999863794,"name":"GET /working-hours"},"timestamp":"2024-12-30T16:56:04.026Z"}
+{"level":"info","message":{"duration":0.006799999999202555,"name":"GET /working-hours"},"timestamp":"2024-12-30T16:56:04.026Z"}
+{"level":"info","message":{"duration":26.48649999999907,"method":"GET","path":"/","status":304},"timestamp":"2024-12-30T16:56:04.053Z"}
+{"level":"info","message":{"duration":0.007499999999708962,"name":"GET /"},"timestamp":"2024-12-30T16:56:04.053Z"}
+{"level":"info","message":{"duration":0.27700000000004366,"method":"GET","path":"/","status":304},"timestamp":"2024-12-30T16:56:04.054Z"}
+{"level":"info","message":{"duration":0.006400000000212458,"name":"GET /"},"timestamp":"2024-12-30T16:56:04.054Z"}
+{"level":"info","message":{"duration":0.34029999999984284,"method":"POST","path":"/login","status":401},"timestamp":"2024-12-30T16:56:08.367Z"}
+{"level":"info","message":{"duration":0.02080000000023574,"name":"POST /login"},"timestamp":"2024-12-30T16:56:08.367Z"}

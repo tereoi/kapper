@@ -40,26 +40,25 @@ router.post('/working-hours', async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
       const { username, password } = req.body;
+      console.log('Login attempt:', { username, password });
+      
       const admin = await Admin.findOne({ where: { username } });
+      console.log('Found admin:', admin);
       
       if (admin && admin.password === password) {
-        req.session.isAdmin = true;
-        req.session.adminId = admin.id;
-        
-        res.json({ 
-          success: true, 
-          message: 'Login successful' 
-        });
-      } else {
-        res.status(401).json({ 
-          success: false, 
-          message: 'Invalid credentials' 
-        });
+        return res.json({ success: true });
       }
+   
+      res.status(401).json({ 
+        success: false,
+        message: 'Invalid credentials' 
+      });
+   
     } catch (error) {
+      console.error('Login error:', error);
       res.status(500).json({ message: error.message });
     }
-  });
+   });;
 
 // Werktijden instellen
 router.post('/working-hours', async (req, res) => {

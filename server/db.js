@@ -1,32 +1,20 @@
+// db.js
 const { Sequelize } = require('sequelize');
 
-const initializeDatabase = () => {
-  const databaseUrl = process.env.DATABASE_URL;
-  
-  if (!databaseUrl) {
-    throw new Error('DATABASE_URL environment variable is required');
-  }
-
-  const sequelize = new Sequelize(databaseUrl, {
+const sequelize = new Sequelize(
+  process.env.NODE_ENV === 'production' 
+    ? process.env.DATABASE_URL
+    : 'postgres://postgres:@Doortje3@localhost:5432/hairdresser',
+  {
     dialect: 'postgres',
-    dialectOptions: {
+    dialectOptions: process.env.NODE_ENV === 'production' ? {
       ssl: {
         require: true,
         rejectUnauthorized: false
       }
-    },
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000
-    },
+    } : {},
     logging: false
-  });
-
-  return sequelize;
-};
-
-const sequelize = initializeDatabase();
+  }
+);
 
 module.exports = sequelize;
