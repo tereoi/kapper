@@ -2,7 +2,6 @@ const { Sequelize } = require('sequelize');
 
 let sequelize;
 
-// Verbeterde configuratie met retry mechanisme
 const connectWithRetry = async () => {
   let retries = 5;
   
@@ -44,11 +43,26 @@ const connectWithRetry = async () => {
       if (retries === 0) {
         throw new Error('Unable to connect to the database after multiple attempts');
       }
-      
-      // Wacht 5 seconden voor de volgende poging
       await new Promise(resolve => setTimeout(resolve, 5000));
     }
   }
 };
 
-module.exports = { sequelize, connectWithRetry };
+// Direct export van sequelize instantie
+module.exports = new Sequelize(
+  process.env.NODE_ENV === 'production'
+    ? process.env.DATABASE_URL
+    : 'postgres://postgres:@Doortje3@localhost:5432/hairdresser',
+  {
+    dialect: 'postgres',
+    dialectOptions: process.env.NODE_ENV === 'production' 
+      ? {
+          ssl: {
+            require: true,
+            rejectUnauthorized: false
+          }
+        }
+      : {},
+    logging: process.env.NODE_ENV === 'production' ? false : console.log
+  }
+);
