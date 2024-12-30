@@ -23,7 +23,7 @@ class GoogleCalendarService {
       const startDateTime = `${appointment.date}T${appointment.time}:00`;
       const endDateTime = new Date(new Date(startDateTime).getTime() + 40 * 60000)
         .toISOString().replace(/:00\.000Z$/, ":40:00");
-
+  
       const event = {
         summary: `🪒 Afspraak: ${appointment.service}`,
         description: `
@@ -50,14 +50,13 @@ class GoogleCalendarService {
         attendees: [
           { email: appointment.email }
         ],
-        // Verwijderd: sendUpdates: 'all'
       };
-
+  
       const response = await this.calendar.events.insert({
         calendarId: 'primary',
         resource: event,
       });
-
+  
       console.log('Event created:', response.data.htmlLink);
       return response.data;
     } catch (error) {
@@ -65,13 +64,14 @@ class GoogleCalendarService {
       throw error;
     }
   }
+  
 
   async updateCalendarEvent(eventId, appointment) {
     try {
       const startDateTime = `${appointment.date}T${appointment.time}:00`;
       const endDateTime = new Date(new Date(startDateTime).getTime() + 40 * 60000)
         .toISOString().replace(/:00\.000Z$/, ":40:00");
-
+  
       const event = {
         summary: `🪒 Afspraak: ${appointment.service}`,
         description: `
@@ -98,15 +98,14 @@ class GoogleCalendarService {
         attendees: [
           { email: appointment.email }
         ],
-        // Verwijderd: sendUpdates: 'all'
       };
-
+  
       const response = await this.calendar.events.update({
         calendarId: 'primary',
         eventId: eventId,
         resource: event,
       });
-
+  
       return response.data;
     } catch (error) {
       console.error('Error updating calendar event:', error);
