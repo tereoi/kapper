@@ -99,13 +99,56 @@ setInterval(keepAlive, 5 * 60 * 1000);
 // Start server
 const startServer = async () => {
   try {
-    await sequelize.sync({ alter: true });
+    // Probeer verbinding te maken met database met retry mechanisme
+    const db = await connectWithRetry();
+    
+    // Sync database
+    await db.sync({ alter: true });
     console.log('Database synchronized');
 
-    const PORT = process.env.PORT || 3001;
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+    // Health check endpoint
+    app.get('/health', async (req, res) => {
+      try {
+        await db.authenticate();
+        res.json({ 
+          status: 'healthy',
+          database: 'connected',
+          environment: process.env.NODE_ENV,
+          timestamp: new Date()
+        });
+      } catch (error) {
+        res.status(503).json({ 
+          status: 'unhealthy',
+          database: 'disconnected',
+          error: error.message
+        });
+      }
     });
+
+    const PORT = process.env.PORT || 3001;
+    const server = app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+      console.log('Environment:', process.env.NODE_ENV);
+    });
+
+    // Graceful shutdown
+    const shutdown = async () => {
+      console.log('Shutting down gracefully...');
+      server.close(async () => {
+        try {
+          await db.close();
+          console.log('Database connection closed.');
+          process.exit(0);
+        } catch (err) {
+          console.error('Error during shutdown:', err);
+          process.exit(1);
+        }
+      });
+    };
+
+    process.on('SIGTERM', shutdown);
+    process.on('SIGINT', shutdown);
+
   } catch (error) {
     console.error('Unable to start server:', error);
     process.exit(1);
