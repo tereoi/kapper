@@ -101,6 +101,13 @@ setInterval(keepAlive, 5 * 60 * 1000);
 // Start server
 const startServer = async () => {
   try {
+    console.log('Checking environment...');
+    console.log('DATABASE_URL configured:', !!process.env.DATABASE_URL);
+    console.log('NODE_ENV:', process.env.NODE_ENV);
+    
+    await sequelize.authenticate();
+    console.log('Database connection successful');
+    
     await sequelize.sync({ alter: true });
     console.log('Database synchronized');
 
@@ -109,7 +116,7 @@ const startServer = async () => {
       console.log(`Server running on port ${PORT}`);
     });
   } catch (error) {
-    console.error('Unable to start server:', error);
+    console.error('Server startup failed:', error);
     process.exit(1);
   }
 };
