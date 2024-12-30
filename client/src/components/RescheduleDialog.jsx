@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, Clock } from 'lucide-react';
 import axios from 'axios';
 import { config } from '../config';
+import CustomDatePicker from './CustomDatePicker';
+
 
 const RescheduleDialog = ({ isOpen, onClose, appointment, onReschedule }) => {
   const [newDate, setNewDate] = useState('');
@@ -92,7 +94,7 @@ const RescheduleDialog = ({ isOpen, onClose, appointment, onReschedule }) => {
         <h3 className="text-xl font-semibold text-white mb-6">
           Afspraak verzetten
         </h3>
-
+  
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Huidige afspraak info */}
           <div className="bg-white/[0.03] rounded-xl p-4 border border-white/[0.08]">
@@ -101,28 +103,15 @@ const RescheduleDialog = ({ isOpen, onClose, appointment, onReschedule }) => {
               {appointment.name} - {appointment.date} om {appointment.time}
             </p>
           </div>
-
+  
           {/* Nieuwe datum */}
-          <div className="space-y-1.5">
-            <label className="block text-white/80 text-sm font-medium">
-              Nieuwe datum
-            </label>
-            <div className="relative">
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40">
-                <Calendar size={18} />
-              </div>
-              <input
-                type="date"
-                value={newDate}
-                onChange={handleDateChange}
-                min={new Date().toISOString().split('T')[0]}
-                className="w-full pl-10 pr-4 py-3 bg-white/[0.05] border border-white/[0.08]
-                  rounded-xl text-white placeholder-white/40 transition-all duration-300"
-                required
-              />
-            </div>
-          </div>
-
+          <CustomDatePicker
+            value={newDate}
+            onChange={handleDateChange}
+            min={new Date().toISOString().split('T')[0]}
+            label="Nieuwe datum"
+          />
+  
           {/* Nieuwe tijd */}
           {availableTimes.length > 0 && (
             <div className="space-y-1.5">
@@ -148,14 +137,14 @@ const RescheduleDialog = ({ isOpen, onClose, appointment, onReschedule }) => {
               </div>
             </div>
           )}
-
+  
           {/* Error message */}
           {error && (
             <p className="text-red-400 text-sm bg-red-500/10 px-4 py-2 rounded-lg">
               {error}
             </p>
           )}
-
+  
           {/* Buttons */}
           <div className="flex justify-end space-x-3 pt-4 border-t border-white/[0.08]">
             <button

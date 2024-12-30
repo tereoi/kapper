@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Calendar, Clock, Mail, Phone, User, Scissors, ChevronRight } from 'lucide-react';
 import { config } from '../config';
+import CustomDatePicker from './CustomDatePicker';
+
 
 const BookingForm = () => {
   const [formData, setFormData] = useState({
@@ -334,10 +336,21 @@ const BookingForm = () => {
             </h2>
             
             <div className="space-y-4">
-              {formSteps[currentStep].fields.map((field, index) => (
-                <div key={index}>{renderField(field)}</div>
-              ))}
-            </div>
+            {formSteps[currentStep].fields.map((field, index) => {
+              if (field.type === "date") {
+                return (
+                  <CustomDatePicker
+                    key={index}
+                    value={formData.date}
+                    onChange={handleDateChange}
+                    min={new Date().toISOString().split('T')[0]}
+                    label={field.label}
+                  />
+                );
+              }
+              return <div key={index}>{renderField(field)}</div>;
+            })}
+          </div>
 
             {/* Booking Availability Message */}
             {formData.date && (
