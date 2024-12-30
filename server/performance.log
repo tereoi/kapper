@@ -267,3 +267,4 @@
 {"level":"info","message":{"duration":35.29869999998482,"method":"GET","path":"/working-hours","status":304},"timestamp":"2024-12-30T16:17:14.185Z"}
 {"level":"info","message":{"duration":0.004599999985657632,"name":"GET /working-hours"},"timestamp":"2024-12-30T16:17:14.185Z"}
 {"level":"info","message":{"heapTotal":65802240,"heapUsed":63662728,"rss":112451584,"type":"memory-usage"},"timestamp":"2024-12-30T16:21:58.964Z"}
+{"level":"info","message":{"heapTotal":64753664,"heapUsed":62291896,"rss":111374336,"type":"memory-usage"},"timestamp":"2024-12-30T16:37:36.518Z"}

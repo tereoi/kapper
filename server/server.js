@@ -68,6 +68,7 @@ setupMonitoring(app);
 // Protected routes
 app.use('/api/appointments', cacheMiddleware(300), appointmentRoutes);
 app.use('/api/admin', protectAdminRoute, adminRoutes);
+app.use('/api/admin/login', adminRoutes);
 app.use('/auth', authRoutes);
 app.use('/api/manager', managerRoutes);
 

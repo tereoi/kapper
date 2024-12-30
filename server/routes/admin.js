@@ -39,27 +39,16 @@ router.post('/working-hours', async (req, res) => {
 // Admin login
 router.post('/login', async (req, res) => {
     try {
-      console.log('Login attempt:', req.body);
       const { username, password } = req.body;
-      
-      if (!username || !password) {
-        return res.status(400).json({ 
-          success: false, 
-          message: 'Username and password are required' 
-        });
-      }
-  
       const admin = await Admin.findOne({ where: { username } });
-      console.log('Found admin:', admin ? 'Yes' : 'No');
       
       if (admin && admin.password === password) {
-        // Set session information
         req.session.isAdmin = true;
         req.session.adminId = admin.id;
         
         res.json({ 
           success: true, 
-          message: 'Login successful'
+          message: 'Login successful' 
         });
       } else {
         res.status(401).json({ 
@@ -68,11 +57,7 @@ router.post('/login', async (req, res) => {
         });
       }
     } catch (error) {
-      console.error('Login error:', error);
-      res.status(500).json({ 
-        success: false, 
-        message: error.message 
-      });
+      res.status(500).json({ message: error.message });
     }
   });
 
