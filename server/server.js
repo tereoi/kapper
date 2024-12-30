@@ -1,71 +1,127 @@
-const { Sequelize } = require('sequelize');
+// server/server.js
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const compression = require('compression');
+const helmet = require('helmet');
+const session = require('express-session');
+const rateLimit = require('express-rate-limit');
 
-let sequelize;
+// Import middleware
+const errorHandler = require('./middleware/errorHandler');
+const cacheMiddleware = require('./middleware/cache');
+const setupMiddleware = require('./middleware/security');
 
-if (process.env.NODE_ENV === 'production') {
-  // Log de database URL (verberg gevoelige info)
-  const dbUrl = process.env.DATABASE_URL || 'No DATABASE_URL set';
-  console.log('Database URL format:', dbUrl.split('@')[1]); // Log alleen het host deel
-  
-  sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect: 'postgres',
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      },
-      keepAlive: true,
-    },
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 60000,
-      idle: 10000
-    },
-    retry: {
-      max: 5,
-      backoffBase: 5000,
-      backoffExponent: 1.1,
-    },
-    logging: false
-  });
-} else {
-  sequelize = new Sequelize('postgres://postgres:@Doortje3@localhost:5432/hairdresser', {
-    dialect: 'postgres',
-    logging: console.log
-  });
-}
+// Import routes and database
+const sequelize = require('./db');
+const appointmentRoutes = require('./routes/appointments');
+const adminRoutes = require('./routes/admin');
+const authRoutes = require('./routes/auth');
+const managerRoutes = require('./routes/manager');
 
-// Verbeterde connectie test
-const testConnection = async () => {
-  let retries = 5;
-  while (retries) {
-    try {
-      await sequelize.authenticate();
-      console.log('Database connection has been established successfully.');
-      return true;
-    } catch (err) {
-      console.error('Unable to connect to the database:', {
-        message: err.message,
-        code: err.original?.code,
-        errno: err.original?.errno
-      });
-      retries -= 1;
-      if (retries === 0) return false;
-      console.log(`Retrying connection... ${retries} attempts left`);
-      await new Promise(resolve => setTimeout(resolve, 5000));
-    }
+// Import monitoring
+const { setupMonitoring } = require('./monitoring/performance');
+
+const app = express();
+
+// Basic middleware
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production' 
+    ? 'https://yourdomain.com' 
+    : 'http://localhost:5173',
+  credentials: true
+}));
+app.use(compression());
+app.use(helmet());
+app.use(express.json());
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100
+});
+app.use('/api/', limiter);
+
+// Session configuration
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 24 * 60 * 60 * 1000
   }
-  return false;
+}));
+
+// Setup security middleware
+setupMiddleware(app);
+
+// Setup monitoring
+setupMonitoring(app);
+
+// Cache frequently accessed routes
+app.use('/api/appointments', cacheMiddleware(300), appointmentRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/auth', authRoutes);
+app.use('/api/manager', managerRoutes); 
+
+// Error handling
+app.use(errorHandler);
+
+// Health check
+app.get('/health', async (req, res) => {
+  try {
+    await sequelize.authenticate();
+    res.json({ 
+      status: 'healthy',
+      database: 'connected',
+      timestamp: new Date()
+    });
+  } catch (error) {
+    res.status(503).json({ 
+      status: 'unhealthy',
+      database: 'disconnected',
+      error: error.message
+    });
+  }
+});
+
+// Keep-alive mechanism
+const keepAlive = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Keep-alive check successful');
+  } catch (error) {
+    console.error('Keep-alive failed:', error);
+  }
 };
 
-// Test de connectie bij startup
-testConnection()
-  .then(success => {
-    if (!success) {
-      console.error('Failed to establish database connection after retries');
-      process.exit(1);
-    }
-  });
+setInterval(keepAlive, 5 * 60 * 1000);
 
-module.exports = sequelize;
+// Start server
+const startServer = async () => {
+  try {
+    await sequelize.sync({ alter: true });
+    console.log('Database synchronized');
+
+    const PORT = process.env.PORT || 3001;
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error('Unable to start server:', error);
+    process.exit(1);
+  }
+};
+
+startServer();
+
+// Error handling for unhandled rejections
+process.on('unhandledRejection', (error) => {
+  console.error('Unhandled promise rejection:', error);
+});
+
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught exception:', error);
+  process.exit(1);
+});
