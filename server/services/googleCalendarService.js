@@ -1,4 +1,3 @@
-// services/googleCalendarService.js
 const { google } = require('googleapis');
 const { OAuth2 } = google.auth;
 
@@ -11,14 +10,16 @@ class GoogleCalendarService {
         process.env.GOOGLE_REDIRECT_URL
       );
 
-      this.oauth2Client.setCredentials({
-        access_token: process.env.GOOGLE_ACCESS_TOKEN,
-        refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
-      });
+      if (process.env.GOOGLE_ACCESS_TOKEN && process.env.GOOGLE_REFRESH_TOKEN) {
+        this.oauth2Client.setCredentials({
+          access_token: process.env.GOOGLE_ACCESS_TOKEN,
+          refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
+        });
+      }
 
       this.calendar = google.calendar({ version: 'v3', auth: this.oauth2Client });
     } catch (error) {
-      console.error('Fout bij initialiseren Google Calendar service:', error);
+      console.error('Error initializing Google Calendar service:', error);
       throw error;
     }
   }
@@ -28,7 +29,7 @@ class GoogleCalendarService {
       const startDateTime = `${appointment.date}T${appointment.time}:00`;
       const endDateTime = new Date(new Date(startDateTime).getTime() + 40 * 60000)
         .toISOString()
-        .split('.')[0]; // Verwijder milliseconds en Z timezone marker
+        .split('.')[0];
 
       const event = {
         summary: `🪒 Afspraak: ${appointment.service}`,
@@ -59,6 +60,7 @@ class GoogleCalendarService {
       const response = await this.calendar.events.insert({
         calendarId: 'primary',
         resource: event,
+        sendNotifications: true,
       });
 
       console.log('Event created:', response.data.htmlLink);
@@ -106,6 +108,7 @@ class GoogleCalendarService {
         calendarId: 'primary',
         eventId: eventId,
         resource: event,
+        sendNotifications: true,
       });
 
       return response.data;
@@ -120,34 +123,11 @@ class GoogleCalendarService {
       await this.calendar.events.delete({
         calendarId: 'primary',
         eventId: eventId,
+        sendNotifications: true,
       });
       console.log('Event deleted:', eventId);
     } catch (error) {
       console.error('Error deleting calendar event:', error);
-      throw error;
-    }
-  }
-
-  // Helper methode voor het ophalen van beschikbare tijden
-  async getAvailableSlots(date) {
-    try {
-      const startOfDay = new Date(date);
-      startOfDay.setHours(0, 0, 0, 0);
-      
-      const endOfDay = new Date(date);
-      endOfDay.setHours(23, 59, 59, 999);
-
-      const response = await this.calendar.events.list({
-        calendarId: 'primary',
-        timeMin: startOfDay.toISOString(),
-        timeMax: endOfDay.toISOString(),
-        singleEvents: true,
-        orderBy: 'startTime',
-      });
-
-      return response.data.items || [];
-    } catch (error) {
-      console.error('Error fetching calendar slots:', error);
       throw error;
     }
   }

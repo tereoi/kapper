@@ -1,11 +1,20 @@
-// services/emailService.js
 const nodemailer = require('nodemailer');
 
+// Configureer email transporter
 const transporter = nodemailer.createTransport({
-  service: 'gmail',  // Specifiek 'gmail' gebruiken in plaats van host/port
+  service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_APP_PASSWORD
+  }
+});
+
+// Verifieer email configuratie bij opstarten
+transporter.verify(function(error, success) {
+  if (error) {
+    console.error('Email service error:', error);
+  } else {
+    console.log('Email server is ready');
   }
 });
 
@@ -15,14 +24,6 @@ const formatDate = (dateString) => {
   const date = new Date(dateString);
   return `${days[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
 };
-
-transporter.verify(function(error, success) {
-  if (error) {
-    console.error('Email service error:', error);
-  } else {
-    console.log('Email server is ready to take our messages');
-  }
-});
 
 const emailService = {
   async sendConfirmation(appointment) {
@@ -57,7 +58,7 @@ const emailService = {
         to: appointment.email,
         subject: 'Je afspraak is gewijzigd',
         html: `
-          <div>
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
             <h2>Hallo ${appointment.name},</h2>
             <p>Je afspraak is gewijzigd naar:</p>
             <p><strong>Datum:</strong> ${formatDate(appointment.date)}</p>
@@ -82,7 +83,7 @@ const emailService = {
         to: appointment.email,
         subject: 'Je afspraak is geannuleerd',
         html: `
-          <div>
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
             <h2>Hallo ${appointment.name},</h2>
             <p>Je afspraak is geannuleerd.</p>
           </div>
