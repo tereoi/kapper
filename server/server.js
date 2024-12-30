@@ -8,9 +8,9 @@ const session = require('express-session');
 const rateLimit = require('express-rate-limit');
 
 // Import middleware
-const errorHandler = require('./middleware/errorHandler');
-const cacheMiddleware = require('./middleware/cache');
-const setupMiddleware = require('./middleware/security');
+// const errorHandler = require('./middleware/errorHandler');
+// const cacheMiddleware = require('./middleware/cache');
+// const setupMiddleware = require('./middleware/security');
 
 // Import routes and database
 const sequelize = require('./db');
@@ -54,19 +54,17 @@ app.use(session({
 }));
 
 // Setup security middleware
-setupMiddleware(app);
+// setupMiddleware(app);
 
 // Setup monitoring
-setupMonitoring(app);
+// setupMonitoring(app);
 
 // Cache frequently accessed routes
-app.use('/api/appointments', cacheMiddleware(300), appointmentRoutes);
+app.use('/api/appointments', appointmentRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/auth', authRoutes);
 app.use('/api/manager', managerRoutes); 
 
-// Error handling
-app.use(errorHandler);
 
 // Health check
 app.get('/health', async (req, res) => {
