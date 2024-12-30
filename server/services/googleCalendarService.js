@@ -18,6 +18,11 @@ class GoogleCalendarService {
     this.calendar = google.calendar({ version: 'v3', auth: this.oauth2Client });
   }
 
+  catch (error) {
+    console.error('Gedetailleerde Google Calendar error:', JSON.stringify(error, null, 2));
+    throw error;
+  }
+
   async createAppointment(appointment) {
     try {
       const startDateTime = `${appointment.date}T${appointment.time}:00`;
