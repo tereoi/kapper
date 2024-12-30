@@ -30,7 +30,7 @@ class GoogleCalendarService {
       const endDateTime = new Date(new Date(startDateTime).getTime() + 40 * 60000)
         .toISOString()
         .split('.')[0];
-
+  
       const event = {
         summary: `🪒 Afspraak: ${appointment.service}`,
         description: `
@@ -50,19 +50,17 @@ class GoogleCalendarService {
         reminders: {
           useDefault: false,
           overrides: [
-            { method: 'email', minutes: 24 * 60 },
-            { method: 'popup', minutes: 60 },
+            { method: 'popup', minutes: 60 }, // Alleen popup, geen email
           ],
         },
-        attendees: [{ email: appointment.email }],
       };
-
+  
       const response = await this.calendar.events.insert({
         calendarId: 'primary',
         resource: event,
-        sendNotifications: true,
+        sendNotifications: false, // Zet notificaties uit
       });
-
+  
       console.log('Event created:', response.data.htmlLink);
       return response.data;
     } catch (error) {
