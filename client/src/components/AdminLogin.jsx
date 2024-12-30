@@ -51,10 +51,10 @@ const AdminLogin = ({ onLoginSuccess }) => {
         setTimeout(() => form.classList.remove('animate-shake'), 500);
       }
     } catch (error) {
-      console.error('Login error details:', error.response || error);
-      setError(error.response?.data?.message || 'Er ging iets mis bij het inloggen.');
+        console.error('Login error details:', error.response || error);
+        setError('An error occurred during login. Please try again.');
     } finally {
-      setIsLoading(false);
+        setIsLoading(false);
     }
   };
 

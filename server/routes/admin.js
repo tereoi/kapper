@@ -48,24 +48,28 @@ router.post('/login', async (req, res) => {
       console.log('Found admin:', admin);
   
       if (admin && admin.password === password) {
+        // Set session data to indicate successful admin login
+        req.session.isAdmin = true;
+        req.session.adminUsername = admin.username;
+        
         return res.json({ 
-          success: true,
-          message: 'Login successful' 
+            success: true,
+            message: 'Login successful' 
         });
-      }
+    }
   
       return res.status(401).json({
         success: false,
         message: 'Invalid credentials'
       });
     } catch (error) {
-      console.error('Login error:', error);
-      return res.status(500).json({
-        success: false,
-        message: error.message
-      });
+        console.error('Login error:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'An error occurred during login'
+        });
     }
-  });
+});
 
 // Werktijden instellen
 router.post('/working-hours', async (req, res) => {
