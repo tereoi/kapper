@@ -51,7 +51,7 @@ class GoogleCalendarService {
         attendees: [
           { email: appointment.email }
         ],
-        sendUpdates: 'all'
+        // Verwijderd: sendUpdates: 'all'
       };
 
       const response = await this.calendar.events.insert({
@@ -100,7 +100,7 @@ class GoogleCalendarService {
         attendees: [
           { email: appointment.email }
         ],
-        sendUpdates: 'all'
+        // Verwijderd: sendUpdates: 'all'
       };
 
       const response = await this.calendar.events.update({
@@ -121,7 +121,7 @@ class GoogleCalendarService {
       await this.calendar.events.delete({
         calendarId: 'primary',
         eventId: eventId,
-        sendUpdates: 'all'
+        // Verwijderd: sendUpdates: 'all'
       });
       console.log('Event deleted:', eventId);
     } catch (error) {
