@@ -20,10 +20,9 @@ class GoogleCalendarService {
 
   async createAppointment(appointment) {
     try {
-      // Set duration to 40 minutes for all appointments
       const startDateTime = `${appointment.date}T${appointment.time}:00`;
       const endDateTime = new Date(new Date(startDateTime).getTime() + 40 * 60000)
-        .toISOString();
+        .toISOString().replace(/:00\.000Z$/, ":40:00");
 
       const event = {
         summary: `🪒 Afspraak: ${appointment.service}`,
@@ -69,10 +68,9 @@ class GoogleCalendarService {
 
   async updateCalendarEvent(eventId, appointment) {
     try {
-      // Set duration to 40 minutes for updates as well
       const startDateTime = `${appointment.date}T${appointment.time}:00`;
       const endDateTime = new Date(new Date(startDateTime).getTime() + 40 * 60000)
-        .toISOString();
+        .toISOString().replace(/:00\.000Z$/, ":40:00");
 
       const event = {
         summary: `🪒 Afspraak: ${appointment.service}`,
