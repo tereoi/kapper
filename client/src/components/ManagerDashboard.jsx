@@ -1,7 +1,7 @@
 // components/ManagerDashboard.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Users, Calendar, TrendingUp } from 'lucide-react';
+import { FiUsers, FiCalendar, FiTrendingUp } from 'react-icons/fi';
 
 const ManagerDashboard = () => {
   const [stats, setStats] = useState({
@@ -48,7 +48,7 @@ const ManagerDashboard = () => {
           {/* Vandaag */}
           <div className="bg-white/[0.03] rounded-2xl p-6 border border-white/[0.08]">
             <div className="flex items-center space-x-3 mb-4">
-              <Calendar className="w-6 h-6 text-blue-400" />
+              <FiCalendar className="w-6 h-6 text-blue-400" />
               <h2 className="text-xl font-semibold text-white">Vandaag</h2>
             </div>
             <p className="text-3xl font-bold text-white">{stats.daily.count}</p>
@@ -58,7 +58,7 @@ const ManagerDashboard = () => {
           {/* Deze Week */}
           <div className="bg-white/[0.03] rounded-2xl p-6 border border-white/[0.08]">
             <div className="flex items-center space-x-3 mb-4">
-              <Users className="w-6 h-6 text-purple-400" />
+              <FiUsers className="w-6 h-6 text-purple-400" />
               <h2 className="text-xl font-semibold text-white">Deze Week</h2>
             </div>
             <p className="text-3xl font-bold text-white">{stats.weekly.count}</p>
@@ -68,7 +68,7 @@ const ManagerDashboard = () => {
           {/* Deze Maand */}
           <div className="bg-white/[0.03] rounded-2xl p-6 border border-white/[0.08]">
             <div className="flex items-center space-x-3 mb-4">
-              <TrendingUp className="w-6 h-6 text-green-400" />
+              <FiTrendingUp className="w-6 h-6 text-green-400" />
               <h2 className="text-xl font-semibold text-white">Deze Maand</h2>
             </div>
             <p className="text-3xl font-bold text-white">{stats.monthly.count}</p>

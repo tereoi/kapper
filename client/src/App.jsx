@@ -1,7 +1,7 @@
 import { useState, lazy, Suspense } from 'react';
 import LoadingSpinner from './components/LoadingSpinner';
 import './App.css';
-import { Scissors, User, ChartBar } from 'lucide-react';
+import { FiScissors, FiUser, FiBarChart2 } from 'react-icons/fi';
 
 // Lazy loaded components
 const AdminLogin = lazy(() => import('./components/AdminLogin'));
@@ -47,7 +47,7 @@ function App() {
                   <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-400 via-indigo-500 to-purple-500
                     flex items-center justify-center shadow-lg transform-gpu transition-all 
                     duration-500 hover:scale-105 hover:shadow-xl hover:shadow-purple-500/20">
-                    <Scissors className="w-5 h-5 text-white" />
+                    <FiScissors className="w-5 h-5 text-white" />
                   </div>
                   <h1 className="text-xl font-medium">Kapper Online Boeken</h1>
                 </div>
@@ -62,7 +62,7 @@ function App() {
                           border border-white/[0.05] hover:border-white/[0.1]
                           shadow-lg shadow-black/20"
                       >
-                        <User className="w-4 h-4" />
+                        <FiUser className="w-4 h-4" />
                         <span className="text-sm font-medium hidden sm:inline">Admin</span>
                       </button>
                       <button
@@ -72,7 +72,7 @@ function App() {
                           border border-white/[0.05] hover:border-white/[0.1]
                           shadow-lg shadow-black/20"
                       >
-                        <ChartBar className="w-4 h-4" />
+                        <FiBarChart2 className="w-4 h-4" />
                         <span className="text-sm font-medium hidden sm:inline">Beheerder</span>
                       </button>
                     </>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Calendar, Trash2, Clock, Mail, Phone, User, ChevronLeft, ChevronRight, Calendar as CalendarIcon } from 'lucide-react';
+import { FiClock, FiTrash2, FiMail, FiPhone, FiUser, FiChevronLeft, FiChevronRight, FiCalendar } from 'react-icons/fi';
 import WorkingHoursManager from './WorkingHoursManager';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog';
 import RescheduleDialog from './RescheduleDialog';
@@ -99,7 +99,7 @@ const AdminDashboard = () => {
       <div className="flex items-start justify-between mb-4">
         <div>
           <div className="flex items-center space-x-2">
-            <Clock className="w-5 h-5 text-blue-400" />
+            <FiClock className="w-5 h-5 text-blue-400" />
             <span className="text-white font-medium">{appointment.time}</span>
           </div>
           {showDate && (
@@ -117,7 +117,7 @@ const AdminDashboard = () => {
             className="text-blue-400 p-2 hover:bg-blue-500/10 rounded-xl 
               transition-all duration-300 hover:text-blue-300"
           >
-            <CalendarIcon size={18} />
+            <FiCalendar size={18} />
           </button>
           <button
             onClick={() => {
@@ -127,22 +127,22 @@ const AdminDashboard = () => {
             className="text-red-400 p-2 hover:bg-red-500/10 rounded-xl
               transition-all duration-300 hover:text-red-300"
           >
-            <Trash2 size={18} />
+            <FiTrash2 size={18} />
           </button>
         </div>
       </div>
       
       <div className="space-y-3">
         <div className="flex items-center space-x-2 text-white/80">
-          <User className="w-4 h-4 text-blue-400" />
+          <FiUser className="w-4 h-4 text-blue-400" />
           <span>{appointment.name}</span>
         </div>
         <div className="flex items-center space-x-2 text-white/80">
-          <Mail className="w-4 h-4 text-blue-400" />
+          <FiMail className="w-4 h-4 text-blue-400" />
           <span>{appointment.email}</span>
         </div>
         <div className="flex items-center space-x-2 text-white/80">
-          <Phone className="w-4 h-4 text-blue-400" />
+          <FiPhone className="w-4 h-4 text-blue-400" />
           <span>{appointment.phone}</span>
         </div>
         <div className="mt-3 px-3 py-1 bg-blue-500/10 rounded-full text-blue-400 text-sm inline-block">
@@ -192,7 +192,7 @@ const AdminDashboard = () => {
                 className="p-2 bg-white/[0.05] text-white rounded-xl hover:bg-white/[0.08] 
                   transition-all duration-300 border border-white/[0.08]"
               >
-                <ChevronLeft size={24} />
+                <FiChevronLeft size={24} />
               </button>
               <div className="flex items-center gap-4">
                 <span className="text-white font-medium">
@@ -211,7 +211,7 @@ const AdminDashboard = () => {
                 className="p-2 bg-white/[0.05] text-white rounded-xl hover:bg-white/[0.08] 
                   transition-all duration-300 border border-white/[0.08]"
               >
-                <ChevronRight size={24} />
+                <FiChevronRight size={24} />
               </button>
             </div>
 

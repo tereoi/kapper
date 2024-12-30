@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Clock } from 'lucide-react';
+import { FiCalendar, FiClock } from 'react-icons/fi';
 import axios from 'axios';
 import { config } from '../config';
 import CustomDatePicker from './CustomDatePicker';
@@ -120,7 +120,7 @@ const RescheduleDialog = ({ isOpen, onClose, appointment, onReschedule }) => {
               </label>
               <div className="relative">
                 <div className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40">
-                  <Clock size={18} />
+                 <FiClock size={18} />
                 </div>
                 <select
                   value={newTime}

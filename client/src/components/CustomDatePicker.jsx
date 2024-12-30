@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Calendar } from 'lucide-react';
+import { FiCalendar } from 'react-icons/fi';
 
 const CustomDatePicker = ({ value, onChange, min, label }) => {
   const inputRef = useRef(null);
@@ -24,7 +24,7 @@ const CustomDatePicker = ({ value, onChange, min, label }) => {
           transition-all duration-300 focus:outline-none focus:ring-2 
           focus:ring-blue-500/30 cursor-pointer"
       >
-        <Calendar className="w-5 h-5 text-white/40" />
+         <FiCalendar className="w-5 h-5 text-white/40" /> 
         <span className="flex-grow text-left">
           {value ? new Date(value).toLocaleDateString('nl-NL', {
             weekday: 'long',

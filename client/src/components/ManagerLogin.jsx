@@ -1,7 +1,7 @@
 // components/ManagerLogin.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
-import { User, Lock, LogIn } from 'lucide-react';
+import { FiUser, FiLock, FiLogIn } from 'react-icons/fi';
 import { config } from '../config';
 
 const ManagerLogin = ({ onLoginSuccess }) => {
@@ -55,7 +55,7 @@ const ManagerLogin = ({ onLoginSuccess }) => {
         <div className="space-y-4">
           <div className="relative">
             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40">
-              <User size={18} />
+             <FiUser size={18} /> 
             </div>
             <input
               type="text"
@@ -71,7 +71,7 @@ const ManagerLogin = ({ onLoginSuccess }) => {
           
           <div className="relative">
             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40">
-              <Lock size={18} />
+              <FiLock size={18} />
             </div>
             <input
               type="password"
@@ -104,7 +104,7 @@ const ManagerLogin = ({ onLoginSuccess }) => {
               <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             ) : (
               <>
-                <LogIn className="w-5 h-5 mr-2" />
+                <FiLogIn className="w-5 h-5 mr-2" />
                 <span>Inloggen</span>
               </>
             )}

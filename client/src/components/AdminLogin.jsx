@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { User, Lock, LogIn } from 'lucide-react';
+import { FiUser, FiLock, FiLogIn } from 'react-icons/fi';
 import { config } from '../config';
 
 const AdminLogin = ({ onLoginSuccess }) => {
@@ -67,7 +67,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
             </label>
             <div className="relative">
               <div className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40">
-                <User size={18} />
+                <FiUser size={18} />
               </div>
               <input
                 type="text"
@@ -89,7 +89,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
             </label>
             <div className="relative">
               <div className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40">
-                <Lock size={18} />
+                <FiLock size={18} />
               </div>
               <input
                 type="password"
@@ -123,7 +123,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
                 <>
-                  <LogIn className="w-5 h-5 mr-2 transform group-hover:rotate-12 transition-transform duration-300" />
+                  <FiLogIn className="w-5 h-5 mr-2 transform group-hover:rotate-12 transition-transform duration-300" />
                   <span>Inloggen</span>
                 </>
               )}

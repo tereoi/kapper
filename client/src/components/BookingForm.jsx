@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Calendar, Clock, Mail, Phone, User, Scissors, ChevronRight } from 'lucide-react';
+import { FiCalendar, FiClock, FiMail, FiPhone, FiUser, FiScissors, FiChevronRight } from 'react-icons/fi';
 import { config } from '../config';
 import CustomDatePicker from './CustomDatePicker';
 
@@ -60,11 +60,6 @@ const BookingForm = () => {
     return hasAvailableTimes ? 'available' : 'full';
   };
 
-  const formatSelectedDate = (dateString) => {
-    if (!dateString) return '';
-    const date = new Date(dateString);
-    return format(date, 'EEEE d MMMM yyyy', { locale: nl });
-  };
 
   const handleDateChange = async (e) => {
     const selectedDate = e.target.value;
@@ -140,12 +135,12 @@ const BookingForm = () => {
         {
           name: "date",
           type: "date",
-          icon: <Calendar className="w-5 h-5" />
+          icon: <FiCalendar className="w-5 h-5" />
         },
         {
           name: "time",
           type: "time-select",
-          icon: <Clock className="w-5 h-5" />
+          icon: <FiClock className="w-5 h-5" />
         }
       ]
     },
@@ -157,21 +152,21 @@ const BookingForm = () => {
           name: "name",
           label: "Naam",
           type: "text",
-          icon: <User className="w-5 h-5" />,
+          icon: <FiUser className="w-5 h-5" />,
           placeholder: "Voer je naam in"
         },
         {
           name: "email",
           label: "Email",
           type: "email",
-          icon: <Mail className="w-5 h-5" />,
+          icon: <FiMail className="w-5 h-5" />,
           placeholder: "naam@voorbeeld.nl"
         },
         {
           name: "phone",
           label: "Telefoon",
           type: "tel",
-          icon: <Phone className="w-5 h-5" />,
+          icon: <FiPhone className="w-5 h-5" />,
           placeholder: "06 12345678"
         }
       ]
@@ -199,7 +194,7 @@ const BookingForm = () => {
               `}
             >
               <div className="flex items-center space-x-3">
-                <Scissors className="w-5 h-5" />
+                <FiScissors className="w-5 h-5" />
                 <span className="font-medium">{option.value}</span>
               </div>
             </button>
@@ -406,7 +401,7 @@ const BookingForm = () => {
                   transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <span>Volgende</span>
-                <ChevronRight className="w-4 h-4" />
+                <FiChevronRight className="w-4 h-4" />
               </button>
             ) : (
               <button

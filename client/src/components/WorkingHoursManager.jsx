@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Plus, X, Trash2 } from 'lucide-react';
+import { FiClock, FiPlus, FiX, FiTrash2 } from 'react-icons/fi';
 import axios from 'axios';
 import { config } from '../config';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog';
@@ -353,7 +353,7 @@ const WorkingHoursManager = ({ selectedDate }) => {
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
                 <>
-                  <Plus size={18} />
+                  <FiPlus size={18} />
                   <span>Tijden toevoegen</span>
                 </>
               )}
@@ -412,7 +412,7 @@ const WorkingHoursManager = ({ selectedDate }) => {
                 active:scale-[0.98] disabled:active:scale-100 flex items-center 
                 justify-center space-x-2"
             >
-              <Plus size={18} />
+              <FiPlus size={18} />
               <span>Pauze toevoegen</span>
             </button>
           </div>
@@ -434,7 +434,7 @@ const WorkingHoursManager = ({ selectedDate }) => {
                       className="text-red-400 hover:text-red-300 transition-colors duration-300
                         p-1 rounded-lg active:scale-[0.98]"
                     >
-                      <X size={14} />
+                      <FiX size={14} />
                     </button>
                   </div>
                 ))}
@@ -457,7 +457,7 @@ const WorkingHoursManager = ({ selectedDate }) => {
                     className="text-red-400 hover:text-red-300 transition-colors duration-300
                       p-2 rounded-lg active:scale-[0.98]"
                   >
-                    <Trash2 size={18} />
+                    <FiTrash2 size={18} />
                   </button>
                 </div>
               </div>
@@ -475,7 +475,7 @@ const WorkingHoursManager = ({ selectedDate }) => {
                       className="text-blue-400 hover:text-red-300 transition-colors duration-300
                         p-1 rounded-lg active:scale-[0.98]"
                     >
-                      <X size={14} />
+                      {/* <X size={14} /> */}
                     </button>
                   </div>
                 ))}
