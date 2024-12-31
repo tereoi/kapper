@@ -34,18 +34,21 @@ const CustomDatePicker = ({
   };
 
   const isDateDisabled = (date) => {
-    const formattedDate = formatDate(date);
+    const today = new Date();
+    const compareDate = new Date(date);
+    compareDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
     
-    // Check minimum date
-    if (min && formattedDate < min) return true;
+    // Allow today's date, but disable past dates
+    if (compareDate < today) return true;
     
     // Check maximum date
-    if (max && formattedDate > max) return true;
+    if (max && formatDate(date) > max) return true;
     
     // If workingDates is provided, check if the date is available
     if (workingDates.length > 0) {
       return !workingDates.some(workingDate => 
-        workingDate.date === formattedDate && !workingDate.isHoliday
+        workingDate.date === formatDate(date) && !workingDate.isHoliday
       );
     }
     
@@ -53,10 +56,12 @@ const CustomDatePicker = ({
   };
 
   const handleDateClick = (date) => {
+    // Create date at noon to avoid timezone issues
     const newDate = new Date(
       currentMonth.getFullYear(),
       currentMonth.getMonth(),
-      date
+      date,
+      12, 0, 0
     );
     
     if (!isDateDisabled(newDate)) {
