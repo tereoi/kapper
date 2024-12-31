@@ -1,44 +1,29 @@
-To do voor maandag:
-
-1. Afspraken 40 min lang maken.
-2. Zorgen dat de kapper een afspraak aan kan passen naar een andere dag en tijd.
-3. Beheerder scherm maken zodat ik alle statistieken kan zien.
-4. Zorgen dat alles er perfect uitziet ook op telefoon.
-5. klant een email of sms versturen met de info
 Voor maandag:
 
-Serieus!! Github fixen
 
 1. Afspraken en pauzes 40 min lang maken (let op dat deze goed in de google agenda komen te staan).
-    Alleen google agenda toevoegen.
-
+    gelukt
 
 2. Afspraken (dag en tijd) kunnen verzetten.
-    Datum picker ziet er niet mooi uit op telefoon.
-
+    Datum picker niet te gebruiken op telefoon.
 
 3. Beheerder scherm maken zodat ik alles bij kan houden.
     Stats werkend maken en account aanmaken in database.
 
-
 4. Design afmaken zodat het er op telefoon ook mooi uitziet. (geen lelijke witte knoppen etc).
     Datumpicker tekst over icoon. Melding stap 2 nog te zienn bij stap 3 klant.
 
-
 5. Klant een mailtje sturen met verificatie en gegevens van de afspraak zelf (datum en tijd en soort behandeling).
-    gelukt
-
+    (alleen verwijderde afspraken nog google agenda mail)
 
 
 
 Na maandag:
 
-1. De klant een mail sturen 1 dag voor zijn afspraak voor reminder.
-1. sms verificatie.
+1. 2e admin account aanmaken
+2. Sms verificatie voordat ze een afspraak kunnen maken.
+3. Klanten kunnen bannen via hun telefoonnummer na het niet opkomen dagen.
 
 
-
-Issie koppelen:
-
-1. Google account koppelen voor agenda.
-2. Eigen gebruikersnaam en wachtwoord.
+Testen:
+1. Of ik het wachtwoord kan veranderen van de admin

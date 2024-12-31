@@ -1,20 +1,10 @@
 const nodemailer = require('nodemailer');
 
-// Configureer email transporter
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_APP_PASSWORD
-  }
-});
-
-// Verifieer email configuratie bij opstarten
-transporter.verify(function(error, success) {
-  if (error) {
-    console.error('Email service error:', error);
-  } else {
-    console.log('Email server is ready');
   }
 });
 
@@ -33,12 +23,38 @@ const emailService = {
         to: appointment.email,
         subject: 'Bevestiging van je afspraak',
         html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <h2>Hallo ${appointment.name},</h2>
-            <p>Je afspraak is bevestigd! Hier zijn de details:</p>
-            <p><strong>Datum:</strong> ${formatDate(appointment.date)}</p>
-            <p><strong>Tijd:</strong> ${appointment.time}</p>
-            <p><strong>Service:</strong> ${appointment.service}</p>
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
+            <div style="text-align: center; margin-bottom: 30px;">
+              <h1 style="color: #333; margin-bottom: 10px;">Afspraak Bevestigd!</h1>
+            </div>
+            
+            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+              <p style="color: #333; font-size: 16px; margin-bottom: 20px;">
+                Beste ${appointment.name},
+              </p>
+              <p style="color: #333; font-size: 16px; line-height: 1.5;">
+                Bij deze bevestigen wij je afspraak. Hieronder vind je de details:
+              </p>
+            </div>
+
+            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px;">
+              <div style="margin-bottom: 15px;">
+                <strong style="color: #555;">Datum:</strong>
+                <p style="color: #333; margin: 5px 0;">${formatDate(appointment.date)}</p>
+              </div>
+              <div style="margin-bottom: 15px;">
+                <strong style="color: #555;">Tijd:</strong>
+                <p style="color: #333; margin: 5px 0;">${appointment.time}</p>
+              </div>
+              <div style="margin-bottom: 15px;">
+                <strong style="color: #555;">Service:</strong>
+                <p style="color: #333; margin: 5px 0;">${appointment.service}</p>
+              </div>
+            </div>
+
+            <div style="margin-top: 30px; padding: 20px; text-align: center; color: #666; font-size: 14px;">
+              <p>Tot ziens in de salon!</p>
+            </div>
           </div>
         `,
       };
@@ -58,12 +74,38 @@ const emailService = {
         to: appointment.email,
         subject: 'Je afspraak is gewijzigd',
         html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <h2>Hallo ${appointment.name},</h2>
-            <p>Je afspraak is gewijzigd naar:</p>
-            <p><strong>Datum:</strong> ${formatDate(appointment.date)}</p>
-            <p><strong>Tijd:</strong> ${appointment.time}</p>
-            <p><strong>Service:</strong> ${appointment.service}</p>
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
+            <div style="text-align: center; margin-bottom: 30px;">
+              <h1 style="color: #333; margin-bottom: 10px;">Afspraak Gewijzigd</h1>
+            </div>
+            
+            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+              <p style="color: #333; font-size: 16px; margin-bottom: 20px;">
+                Beste ${appointment.name},
+              </p>
+              <p style="color: #333; font-size: 16px; line-height: 1.5;">
+                Je afspraak is succesvol gewijzigd. Hieronder vind je de nieuwe details:
+              </p>
+            </div>
+
+            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px;">
+              <div style="margin-bottom: 15px;">
+                <strong style="color: #555;">Nieuwe datum:</strong>
+                <p style="color: #333; margin: 5px 0;">${formatDate(appointment.date)}</p>
+              </div>
+              <div style="margin-bottom: 15px;">
+                <strong style="color: #555;">Nieuwe tijd:</strong>
+                <p style="color: #333; margin: 5px 0;">${appointment.time}</p>
+              </div>
+              <div style="margin-bottom: 15px;">
+                <strong style="color: #555;">Service:</strong>
+                <p style="color: #333; margin: 5px 0;">${appointment.service}</p>
+              </div>
+            </div>
+
+            <div style="margin-top: 30px; padding: 20px; text-align: center; color: #666; font-size: 14px;">
+              <p>Tot ziens in de salon!</p>
+            </div>
           </div>
         `,
       };
@@ -83,9 +125,23 @@ const emailService = {
         to: appointment.email,
         subject: 'Je afspraak is geannuleerd',
         html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <h2>Hallo ${appointment.name},</h2>
-            <p>Je afspraak is geannuleerd.</p>
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
+            <div style="text-align: center; margin-bottom: 30px;">
+              <h1 style="color: #333; margin-bottom: 10px;">Afspraak Geannuleerd</h1>
+            </div>
+            
+            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px;">
+              <p style="color: #333; font-size: 16px; margin-bottom: 20px;">
+                Beste ${appointment.name},
+              </p>
+              <p style="color: #333; font-size: 16px; line-height: 1.5;">
+                Je afspraak voor ${formatDate(appointment.date)} om ${appointment.time} is geannuleerd.
+              </p>
+            </div>
+
+            <div style="margin-top: 30px; padding: 20px; text-align: center; color: #666; font-size: 14px;">
+              <p>We hopen je snel weer te zien!</p>
+            </div>
           </div>
         `,
       };

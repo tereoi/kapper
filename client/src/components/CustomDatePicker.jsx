@@ -2,11 +2,11 @@ import React, { useRef } from 'react';
 import { FiCalendar } from 'react-icons/fi';
 
 const CustomDatePicker = ({ value, onChange, min, label }) => {
-  const inputRef = useRef(null);
+  const dateInputRef = useRef(null);
 
   const handleClick = () => {
-    if (inputRef.current) {
-      inputRef.current.showPicker();
+    if (dateInputRef.current) {
+      dateInputRef.current.showPicker();
     }
   };
 
@@ -21,10 +21,10 @@ const CustomDatePicker = ({ value, onChange, min, label }) => {
         onClick={handleClick}
         className="w-full flex items-center space-x-3 px-4 py-3 bg-white/[0.05] 
           border border-white/[0.08] rounded-xl text-white hover:bg-white/[0.08] 
-          transition-all duration-300 focus:outline-none focus:ring-2 
-          focus:ring-blue-500/30 cursor-pointer"
+          transition-all duration-300 focus-within:ring-2 focus-within:ring-blue-500/30 
+          cursor-pointer min-h-[48px]"
       >
-         <FiCalendar className="w-5 h-5 text-white/40" /> 
+        <FiCalendar className="w-5 h-5 text-white/40" />
         <span className="flex-grow text-left">
           {value ? new Date(value).toLocaleDateString('nl-NL', {
             weekday: 'long',
@@ -34,7 +34,7 @@ const CustomDatePicker = ({ value, onChange, min, label }) => {
           }) : 'Selecteer datum'}
         </span>
         <input
-          ref={inputRef}
+          ref={dateInputRef}
           type="date"
           value={value || ''}
           onChange={onChange}
