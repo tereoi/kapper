@@ -1,12 +1,17 @@
 import React, { useRef } from 'react';
-import { FiCalendar } from 'react-icons/fi';
+import { FiCalendar, FiChevronRight } from 'react-icons/fi';
 
 const CustomDatePicker = ({ value, onChange, min, label }) => {
   const dateInputRef = useRef(null);
 
-  const handleClick = () => {
+  const openPicker = () => {
     if (dateInputRef.current) {
-      dateInputRef.current.showPicker();
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        dateInputRef.current.click();
+      } else {
+        dateInputRef.current.showPicker();
+      }
     }
   };
 
@@ -17,32 +22,46 @@ const CustomDatePicker = ({ value, onChange, min, label }) => {
           {label}
         </label>
       )}
-      <div 
-        onClick={handleClick}
-        className="w-full flex items-center space-x-3 px-4 py-3 bg-white/[0.05] 
-          border border-white/[0.08] rounded-xl text-white hover:bg-white/[0.08] 
-          transition-all duration-300 focus-within:ring-2 focus-within:ring-blue-500/30 
-          cursor-pointer min-h-[48px]"
+      <button
+        type="button"
+        onClick={openPicker}
+        className="w-full group relative hover:scale-[1.02] active:scale-[0.98] 
+          transition-all duration-200"
       >
-        <FiCalendar className="w-5 h-5 text-white/40" />
-        <span className="flex-grow text-left">
-          {value ? new Date(value).toLocaleDateString('nl-NL', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          }) : 'Selecteer datum'}
-        </span>
+        <div className="w-full flex items-center justify-between px-4 py-3 
+          bg-white/[0.05] border-2 border-blue-500/30 rounded-xl text-white 
+          hover:bg-white/[0.08] transition-all duration-300"
+        >
+          <div className="flex items-center space-x-3">
+            <FiCalendar className="w-5 h-5 text-blue-400" />
+            <span className="text-left">
+              {value ? new Date(value).toLocaleDateString('nl-NL', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              }) : 'Selecteer datum'}
+            </span>
+          </div>
+          <FiChevronRight className="w-5 h-5 text-blue-400 
+            group-hover:translate-x-1 transition-transform duration-200" />
+        </div>
+        
+        {!value && (
+          <div className="absolute -right-2 -top-2 w-4 h-4 bg-blue-500 
+            rounded-full animate-pulse" />
+        )}
+        
         <input
           ref={dateInputRef}
           type="date"
           value={value || ''}
           onChange={onChange}
           min={min}
-          className="absolute opacity-0 -z-10"
+          className="sr-only"
           required
         />
-      </div>
+      </button>
     </div>
   );
 };

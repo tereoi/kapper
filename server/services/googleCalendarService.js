@@ -50,15 +50,16 @@ class GoogleCalendarService {
         reminders: {
           useDefault: false,
           overrides: [
-            { method: 'popup', minutes: 60 }, // Alleen popup, geen email
+            { method: 'popup', minutes: 60 }
           ],
-        },
+        }
       };
   
       const response = await this.calendar.events.insert({
         calendarId: 'primary',
         resource: event,
-        sendNotifications: false, // Zet notificaties uit
+        sendUpdates: 'none',
+        sendNotifications: false
       });
   
       console.log('Event created:', response.data.htmlLink);
@@ -95,18 +96,17 @@ class GoogleCalendarService {
         reminders: {
           useDefault: false,
           overrides: [
-            { method: 'email', minutes: 24 * 60 },
-            { method: 'popup', minutes: 60 },
+            { method: 'popup', minutes: 60 }
           ],
-        },
-        attendees: [{ email: appointment.email }],
+        }
       };
 
       const response = await this.calendar.events.update({
         calendarId: 'primary',
         eventId: eventId,
         resource: event,
-        sendNotifications: true,
+        sendUpdates: 'none',
+        sendNotifications: false
       });
 
       return response.data;
@@ -121,7 +121,8 @@ class GoogleCalendarService {
       await this.calendar.events.delete({
         calendarId: 'primary',
         eventId: eventId,
-        sendNotifications: true,
+        sendUpdates: 'none',
+        sendNotifications: false
       });
       console.log('Event deleted:', eventId);
     } catch (error) {
