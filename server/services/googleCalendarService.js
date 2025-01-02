@@ -50,9 +50,15 @@ class GoogleCalendarService {
         reminders: {
           useDefault: false,
           overrides: [
-            { method: 'popup', minutes: 60 }
+            { method: 'popup', minutes: 0 },  // Direct notificatie bij toevoegen
+            { method: 'popup', minutes: 60 }  // 1 uur van tevoren
           ],
-        }
+        },
+        // Zorgt ervoor dat je een notificatie krijgt bij nieuwe events
+        notifications: [{
+          type: 'eventCreation',
+          method: 'popup'
+        }]
       };
   
       const response = await this.calendar.events.insert({
@@ -78,7 +84,7 @@ class GoogleCalendarService {
         .split('.')[0];
 
       const event = {
-        summary: `🪒 Afspraak: ${appointment.service}`,
+        summary: `🪒 ${appointment.name} - ${appointment.service}`,
         description: `
           Klant: ${appointment.name}
           Email: ${appointment.email}
