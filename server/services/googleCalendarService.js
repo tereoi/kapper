@@ -48,10 +48,9 @@ class GoogleCalendarService {
           timeZone: 'Europe/Amsterdam',
         },
         reminders: {
-          useDefault: true,  // Gebruik de standaard agenda notificaties
+          useDefault: false,
           overrides: [
-            { method: 'popup', minutes: 0 },  // Direct notificatie
-            { method: 'popup', minutes: 60 }  // 1 uur van tevoren
+            { method: 'popup', minutes: 60 }
           ],
         }
       };
@@ -59,8 +58,8 @@ class GoogleCalendarService {
       const response = await this.calendar.events.insert({
         calendarId: 'primary',
         resource: event,
-        sendUpdates: 'all',
-        sendNotifications: true
+        sendUpdates: 'none',
+        sendNotifications: false
       });
   
       console.log('Event created:', response.data.htmlLink);
@@ -79,7 +78,7 @@ class GoogleCalendarService {
         .split('.')[0];
 
       const event = {
-        summary: `🪒 ${appointment.name} - ${appointment.service}`,
+        summary: `🪒 Afspraak: ${appointment.service}`,
         description: `
           Klant: ${appointment.name}
           Email: ${appointment.email}
@@ -106,8 +105,8 @@ class GoogleCalendarService {
         calendarId: 'primary',
         eventId: eventId,
         resource: event,
-        sendUpdates: 'all',
-        sendNotifications: true
+        sendUpdates: 'none',
+        sendNotifications: false
       });
 
       return response.data;
