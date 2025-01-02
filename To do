@@ -1,24 +1,11 @@
-Voor maandag:
+To do:
 
-
-1. Afspraken en pauzes 40 min lang maken (let op dat deze goed in de google agenda komen te staan).
-    gelukt
-
-2. Afspraken (dag en tijd) kunnen verzetten.
-    Datum picker niet te gebruiken op telefoon.
-
-3. Beheerder scherm maken zodat ik alles bij kan houden.
+Afmaken:
+1. Beheerder scherm maken zodat ik alles bij kan houden.
     Stats werkend maken en account aanmaken in database.
 
-4. Design afmaken zodat het er op telefoon ook mooi uitziet. (geen lelijke witte knoppen etc).
-    Datumpicker tekst over icoon. Melding stap 2 nog te zienn bij stap 3 klant.
 
-5. Klant een mailtje sturen met verificatie en gegevens van de afspraak zelf (datum en tijd en soort behandeling).
-    (alleen verwijderde afspraken nog google agenda mail)
-
-
-
-Na maandag:
+Beginnen:
 
 1. 2e admin account aanmaken
 2. Sms verificatie voordat ze een afspraak kunnen maken.
@@ -27,3 +14,9 @@ Na maandag:
 
 Testen:
 1. Of ik het wachtwoord kan veranderen van de admin
+
+
+Issie wensen:
+
+1. 2 weken vooruitplannen vaste dagen en tijden Zaterdag - Dinsdag van 10:30 - 20:00.
+2. Namen van klant in de google agenda ipv "Afspraak knippen".

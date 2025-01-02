@@ -32,7 +32,7 @@ class GoogleCalendarService {
         .split('.')[0];
   
       const event = {
-        summary: `🪒 Afspraak: ${appointment.service}`,
+        summary: `🪒 ${appointment.name} - ${appointment.service}`,
         description: `
           Klant: ${appointment.name}
           Email: ${appointment.email}
