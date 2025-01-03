@@ -32,7 +32,7 @@ class GoogleCalendarService {
         .split('.')[0];
   
       const event = {
-        summary: `🪒 ${appointment.name} - ${appointment.service}`,
+        summary: `Afspraak - ${appointment.name} - ${appointment.service}`,
         description: `
           Klant: ${appointment.name}
           Email: ${appointment.email}
@@ -50,7 +50,7 @@ class GoogleCalendarService {
         reminders: {
           useDefault: false,
           overrides: [
-            { method: 'popup', minutes: 0 }  // Direct popup bij nieuwe afspraak
+            { method: 'popup', minutes: 40 }  // Pop-up 40 minuten voor de afspraak
           ],
         }
       };
@@ -58,8 +58,8 @@ class GoogleCalendarService {
       const response = await this.calendar.events.insert({
         calendarId: 'primary',
         resource: event,
-        sendUpdates: 'none',
-        sendNotifications: true 
+        sendUpdates: 'all',
+        sendNotifications: true
       });
   
       console.log('Event created:', response.data.htmlLink);
@@ -78,7 +78,7 @@ class GoogleCalendarService {
         .split('.')[0];
 
       const event = {
-        summary: `🪒 Afspraak: ${appointment.service}`,
+        summary: `Afspraak - ${appointment.name} - ${appointment.service}`,
         description: `
           Klant: ${appointment.name}
           Email: ${appointment.email}
@@ -96,7 +96,7 @@ class GoogleCalendarService {
         reminders: {
           useDefault: false,
           overrides: [
-            { method: 'popup', minutes: 60 }
+            { method: 'popup', minutes: 40 }  // Pop-up 40 minuten voor de afspraak
           ],
         }
       };
@@ -105,8 +105,8 @@ class GoogleCalendarService {
         calendarId: 'primary',
         eventId: eventId,
         resource: event,
-        sendUpdates: 'none',
-        sendNotifications: false
+        sendUpdates: 'all',
+        sendNotifications: true
       });
 
       return response.data;
@@ -121,8 +121,8 @@ class GoogleCalendarService {
       await this.calendar.events.delete({
         calendarId: 'primary',
         eventId: eventId,
-        sendUpdates: 'none',
-        sendNotifications: false
+        sendUpdates: 'all',
+        sendNotifications: true
       });
       console.log('Event deleted:', eventId);
     } catch (error) {

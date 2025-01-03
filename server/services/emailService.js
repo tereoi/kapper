@@ -76,7 +76,7 @@ const emailService = {
         const hairdresserMailOptions = {
           from: `"Afspraken Systeem" <${process.env.EMAIL_USER}>`,
           to: process.env.EMAIL_USER,
-          subject: `⚠️ Nieuwe afspraak vandaag om ${appointment.time} - ${appointment.name}`,
+          subject: `⚠️ Nieuwe afspraak Binnen 24 uur! ${appointment.time} - ${appointment.name}`,
           html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
               <div style="text-align: center; margin-bottom: 30px;">
