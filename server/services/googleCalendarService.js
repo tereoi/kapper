@@ -50,7 +50,7 @@ class GoogleCalendarService {
         reminders: {
           useDefault: false,
           overrides: [
-            { method: 'popup', minutes: 60 }
+            { method: 'popup', minutes: 0 }  // Direct popup bij nieuwe afspraak
           ],
         }
       };
@@ -59,7 +59,7 @@ class GoogleCalendarService {
         calendarId: 'primary',
         resource: event,
         sendUpdates: 'none',
-        sendNotifications: false
+        sendNotifications: true 
       });
   
       console.log('Event created:', response.data.htmlLink);
