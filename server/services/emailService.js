@@ -15,18 +15,11 @@ const formatDate = (dateString) => {
   return `${days[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
 };
 
-const isWithin24Hours = (appointmentDateTime) => {
-  const now = new Date();
-  const appointment = new Date(appointmentDateTime);
-  const diffInHours = (appointment - now) / (1000 * 60 * 60);
-  return diffInHours <= 24 && diffInHours > 0;
-};
-
 const emailService = {
   async sendConfirmation(appointment) {
     try {
-      // Bevestigingsmail voor de klant
-      const mailOptions = {
+      // Mail voor de klant
+      const clientMailOptions = {
         from: `"Kapper" <${process.env.EMAIL_USER}>`,
         to: appointment.email,
         subject: 'Bevestiging van je afspraak',
@@ -58,6 +51,10 @@ const emailService = {
                 <strong style="color: #555;">Service:</strong>
                 <p style="color: #333; margin: 5px 0;">${appointment.service}</p>
               </div>
+              <div style="margin-bottom: 15px;">
+                <strong style="color: #555;">Contact kapper:</strong>
+                <p style="color: #333; margin: 5px 0;">06 87307655</p>
+              </div>
             </div>
 
             <div style="margin-top: 30px; padding: 20px; text-align: center; color: #666; font-size: 14px;">
@@ -67,56 +64,32 @@ const emailService = {
         `,
       };
 
-      await transporter.sendMail(mailOptions);
-      console.log('Confirmation email sent to:', appointment.email);
-
-      // Check voor afspraak binnen 24 uur en stuur mail naar kapper indien nodig
-      const appointmentDateTime = `${appointment.date}T${appointment.time}:00`;
-      if (isWithin24Hours(appointmentDateTime)) {
-        const hairdresserMailOptions = {
-          from: `"Afspraken Systeem" <${process.env.EMAIL_USER}>`,
-          to: process.env.EMAIL_USER,
-          subject: `⚠️ Nieuwe afspraak Binnen 24 uur! ${appointment.time} - ${appointment.name}`,
-          html: `
-              
-              <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                <p style="color: #333; font-size: 16px; line-height: 1.5;">
-                  Er is een nieuwe afspraak ingepland die binnen 24 uur plaatsvindt:
-                </p>
+      // Mail voor de kapper
+      const hairdresserMailOptions = {
+        from: `"Afspraken Systeem" <${process.env.EMAIL_USER}>`,
+        to: process.env.EMAIL_USER,
+        subject: `Nieuwe afspraak: ${appointment.name} - ${formatDate(appointment.date)} ${appointment.time}`,
+        html: `
+          <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #ffffff;">
+            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px;">
+              <div style="margin-bottom: 10px;">
+                <strong>Klant:</strong> ${appointment.name}
               </div>
-
-              <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px;">
-                <div style="margin-bottom: 15px;">
-                  <strong style="color: #555;">Klant:</strong>
-                  <p style="color: #333; margin: 5px 0;">${appointment.name}</p>
-                </div>
-                <div style="margin-bottom: 15px;">
-                  <strong style="color: #555;">Datum:</strong>
-                  <p style="color: #333; margin: 5px 0;">${formatDate(appointment.date)}</p>
-                </div>
-                <div style="margin-bottom: 15px;">
-                  <strong style="color: #555;">Tijd:</strong>
-                  <p style="color: #333; margin: 5px 0;">${appointment.time}</p>
-                </div>
-                <div style="margin-bottom: 15px;">
-                  <strong style="color: #555;">Service:</strong>
-                  <p style="color: #333; margin: 5px 0;">${appointment.service}</p>
-                </div>
-                <div style="margin-bottom: 15px;">
-                  <strong style="color: #555;">Contact:</strong>
-                  <p style="color: #333; margin: 5px 0;">
-                    Email: ${appointment.email}<br>
-                    Telefoon: ${appointment.phone}
-                  </p>
-                </div>
+              <div style="margin-bottom: 10px;">
+                <strong>Service:</strong> ${appointment.service}
+              </div>
+              <div style="margin-bottom: 10px;">
+                <strong>Tel:</strong> ${appointment.phone}
               </div>
             </div>
-          `,
-        };
+          </div>
+        `,
+      };
 
-        await transporter.sendMail(hairdresserMailOptions);
-        console.log('Urgent notification email sent to hairdresser');
-      }
+      await transporter.sendMail(clientMailOptions);
+      await transporter.sendMail(hairdresserMailOptions);
+      
+      console.log('Confirmation emails sent');
     } catch (error) {
       console.error('Error sending confirmation email:', error);
       throw error;
@@ -157,6 +130,10 @@ const emailService = {
                 <strong style="color: #555;">Service:</strong>
                 <p style="color: #333; margin: 5px 0;">${appointment.service}</p>
               </div>
+              <div style="margin-bottom: 15px;">
+                <strong style="color: #555;">Contact kapper:</strong>
+                <p style="color: #333; margin: 5px 0;">06 87307655</p>
+              </div>
             </div>
 
             <div style="margin-top: 30px; padding: 20px; text-align: center; color: #666; font-size: 14px;">
@@ -192,6 +169,9 @@ const emailService = {
               </p>
               <p style="color: #333; font-size: 16px; line-height: 1.5;">
                 Je afspraak voor ${formatDate(appointment.date)} om ${appointment.time} is geannuleerd.
+              </p>
+              <p style="color: #333; font-size: 16px; line-height: 1.5;">
+                Voor vragen kun je contact opnemen op: 06 87307655
               </p>
             </div>
 
