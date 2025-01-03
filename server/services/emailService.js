@@ -78,10 +78,6 @@ const emailService = {
           to: process.env.EMAIL_USER,
           subject: `⚠️ Nieuwe afspraak Binnen 24 uur! ${appointment.time} - ${appointment.name}`,
           html: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
-              <div style="text-align: center; margin-bottom: 30px;">
-                <h1 style="color: #333; margin-bottom: 10px;">Nieuwe Afspraak Binnen 24 Uur</h1>
-              </div>
               
               <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
                 <p style="color: #333; font-size: 16px; line-height: 1.5;">
