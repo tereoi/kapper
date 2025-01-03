@@ -53,7 +53,7 @@ const emailService = {
             </div>
 
             <div style="margin-top: 30px; padding: 20px; text-align: center; color: #666; font-size: 14px;">
-              <p>Tot ziens in de salon!</p>
+              <p>Tot snel!</p>
             </div>
           </div>
         `,
@@ -104,7 +104,7 @@ const emailService = {
             </div>
 
             <div style="margin-top: 30px; padding: 20px; text-align: center; color: #666; font-size: 14px;">
-              <p>Tot ziens in de salon!</p>
+              <p>Tot snel!</p>
             </div>
           </div>
         `,

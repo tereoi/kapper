@@ -32,7 +32,7 @@ class GoogleCalendarService {
         .split('.')[0];
   
       const event = {
-        summary: `🪒 ${appointment.name} - ${appointment.service}`,
+        summary: `🪒 Nieuwe afspraak: ${appointment.name}`,
         description: `
           Klant: ${appointment.name}
           Email: ${appointment.email}
@@ -50,7 +50,7 @@ class GoogleCalendarService {
         reminders: {
           useDefault: false,
           overrides: [
-            { method: 'popup', minutes: 60 }
+            { method: 'popup', minutes: 0 }  // Direct popup bij nieuwe afspraak
           ],
         }
       };
@@ -59,7 +59,7 @@ class GoogleCalendarService {
         calendarId: 'primary',
         resource: event,
         sendUpdates: 'none',
-        sendNotifications: false
+        sendNotifications: true  // Aangezet om notificaties te verzenden
       });
   
       console.log('Event created:', response.data.htmlLink);
