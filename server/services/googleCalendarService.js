@@ -96,7 +96,7 @@ class GoogleCalendarService {
         reminders: {
           useDefault: false,
           overrides: [
-            { method: 'popup', minutes: 40 }  // Pop-up 40 minuten voor de afspraak
+            { method: 'popup', minutes: 30 }  // Pop-up 40 minuten voor de afspraak
           ],
         }
       };
