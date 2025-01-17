@@ -1,27 +1,20 @@
 // db.js
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize(
-  process.env.DATABASE_URL,
-  {
-    dialect: 'postgres',
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
-    },
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000
-    },
-    logging: false
-  }
-);
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: 'postgres',
+  dialectOptions: {
+    ssl: false
+  },
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  },
+  logging: false
+});
 
-// Add connection retry logic
 const connectWithRetry = async () => {
   let retries = 5;
   while (retries > 0) {

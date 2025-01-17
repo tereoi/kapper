@@ -1,3 +1,4 @@
+// client/src/components/BookingForm.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FiCalendar, FiClock, FiMail, FiPhone, FiUser, FiScissors, FiChevronRight } from 'react-icons/fi';
@@ -122,8 +123,8 @@ const BookingForm = () => {
           name: "service",
           type: "service-select",
           options: [
-            { value: "Knippen", price: "€30", duration: "30 min" },
-            { value: "Knippen en baard", price: "€45", duration: "45 min" }
+            { value: "Knippen", price: "€25"},
+            { value: "Knippen en baard", price: "€25" }
           ]
         }
       ]
@@ -193,9 +194,12 @@ const BookingForm = () => {
                 }
               `}
             >
-              <div className="flex items-center space-x-3">
-                <FiScissors className="w-5 h-5" />
-                <span className="font-medium">{option.value}</span>
+              <div className="flex items-center justify-between w-full">
+                <div className="flex items-center space-x-3">
+                  <FiScissors className="w-5 h-5" />
+                  <span className="font-medium">{option.value}</span>
+                </div>
+                <span className="text-white/80">{option.price}</span>
               </div>
             </button>
           ))}

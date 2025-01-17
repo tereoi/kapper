@@ -2,95 +2,79 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Smooth scrolling for the whole app */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Improved button tap states for mobile */
-@media (hover: none) {
-  button:active {
-    transform: scale(0.96);
+@layer base {
+  body {
+    @apply bg-[#1a1a2e] text-white font-sans antialiased;
   }
 }
 
-/* Custom scrollbar for webkit browsers */
+@layer components {
+  .glass-panel {
+    @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-3xl;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 bg-white/[0.05] border border-white/[0.08] 
+           rounded-xl text-white placeholder-white/40 
+           focus:outline-none focus:ring-2 focus:ring-blue-500/30
+           transition-all duration-300;
+  }
+  
+  .btn-primary {
+    @apply px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600
+           text-white rounded-xl font-medium
+           hover:from-blue-700 hover:to-indigo-700
+           transform hover:scale-105 transition-all duration-300
+           disabled:opacity-50 disabled:cursor-not-allowed
+           disabled:hover:scale-100 shadow-lg hover:shadow-xl;
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-3 bg-white/[0.05] text-white rounded-xl
+           hover:bg-white/[0.08] transition-all duration-300
+           border border-white/[0.08];
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-blue-400 to-indigo-500 text-transparent bg-clip-text;
+  }
+}
+
+/* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  @apply w-2;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.02);
+  @apply bg-black/10 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
+  @apply bg-white/10 rounded-full hover:bg-white/20 transition-colors;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.15);
-}
-
-/* Date Picker Styling */
-input[type="date"] {
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0.75rem;
-  color: white;
-  font-size: 16px;
-  padding: 0.75rem 1rem;
-  width: 100%;
-  min-height: 48px;
-  cursor: pointer;
-}
-
-input[type="date"]:focus {
-  outline: none;
-  border-color: rgba(59, 130, 246, 0.5);
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
-}
-
-/* Calendar Icon Styling */
-input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(1);
-  opacity: 0.5;
-  cursor: pointer;
-  height: 20px;
-  width: 20px;
-  padding: 0.2rem;
-  margin-right: 0.5rem;
-  transition: opacity 0.2s ease;
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator:hover {
-  opacity: 0.8;
-}
-
-/* Mobile Optimization */
+/* Mobile optimizations */
 @media (max-width: 768px) {
-  input[type="date"] {
-    font-size: 16px;
-    padding: 1rem;
-    -webkit-tap-highlight-color: transparent;
+  .glass-panel {
+    @apply rounded-2xl p-6;
   }
   
-  input[type="date"]::-webkit-calendar-picker-indicator {
-    height: 24px;
-    width: 24px;
-    padding: 0.5rem;
+  .input-field {
+    @apply text-base py-4;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    @apply w-full py-4;
   }
 }
 
-/* Firefox specific styles */
-@-moz-document url-prefix() {
-  input[type="date"] {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'%3E%3C/path%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    background-size: 1.5em;
+/* Improved tap states for mobile */
+@media (hover: none) {
+  .btn-primary:active,
+  .btn-secondary:active {
+    @apply transform scale-95;
   }
 }
