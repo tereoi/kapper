@@ -339,11 +339,10 @@ const BookingForm = () => {
               if (field.type === "date") {
                 return (
                   <CustomDatePicker
-                    key={index}
                     value={formData.date}
                     onChange={handleDateChange}
-                    min={new Date().toISOString().split('T')[0]}
-                    label={field.label}
+                    workingDates={workingDates}  // Zorg dat deze data beschikbaar is
+                    label="Selecteer een datum"
                   />
                 );
               }

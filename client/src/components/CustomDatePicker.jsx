@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FiCalendar, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import axios from 'axios';
+import { config } from '../config';
 
 const CustomDatePicker = ({ 
   value, 
@@ -7,19 +9,115 @@ const CustomDatePicker = ({
   min, 
   max,
   label = "Selecteer datum",
-  workingDates = [], // Optional array of available dates
+  workingDates = [], 
   className = "" 
 }) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(value ? new Date(value) : null);
+  const [availabilityCache, setAvailabilityCache] = useState(new Map());
 
+  // Fetch beschikbaarheid voor de huidige maand
   useEffect(() => {
-    if (value) {
-      setSelectedDate(new Date(value));
-      setCurrentMonth(new Date(value));
+    const fetchAvailabilityForMonth = async () => {
+      const startOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
+      const endOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0);
+      
+      for (let date = new Date(startOfMonth); date <= endOfMonth; date.setDate(date.getDate() + 1)) {
+        const formattedDate = formatDate(date);
+        if (!availabilityCache.has(formattedDate)) {
+          try {
+            const response = await axios.get(`${config.endpoints.appointments}/available-times/${formattedDate}`);
+            const hasAvailableTimes = response.data.times && response.data.times.length > 0;
+            setAvailabilityCache(prev => new Map(prev).set(formattedDate, hasAvailableTimes));
+          } catch (error) {
+            console.error('Error fetching availability:', error);
+            setAvailabilityCache(prev => new Map(prev).set(formattedDate, false));
+          }
+        }
+      }
+    };
+
+    fetchAvailabilityForMonth();
+  }, [currentMonth]);
+
+  const formatDate = (date) => {
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0);
+    const offset = d.getTimezoneOffset();
+    d.setMinutes(d.getMinutes() - offset);
+    return d.toISOString().split('T')[0];
+  };
+
+  const getDateStatus = (date) => {
+    const formattedDate = formatDate(date);
+    const workingDate = workingDates.find(wd => wd.date === formattedDate);
+    
+    // Als het geen werkdag is of een feestdag, dan is het dicht
+    if (!workingDate || workingDate.isHoliday) return 'dicht';
+    
+    // Check beschikbare tijden
+    const hasAvailableTimes = availabilityCache.get(formattedDate);
+    if (hasAvailableTimes === false) return 'vol';
+    
+    return 'open';
+  };
+
+  const getDateClasses = (date, isSelected) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const status = getDateStatus(date);
+    const isPast = date < today;
+    
+    const baseClasses = "h-10 w-10 rounded-lg flex items-center justify-center transition-all duration-300 relative ";
+    
+    if (isPast) {
+      return baseClasses + "text-white/20 cursor-not-allowed";
     }
-  }, [value]);
+    
+    if (isSelected) {
+      return baseClasses + "bg-blue-500 text-white hover:bg-blue-600";
+    }
+    
+    switch (status) {
+      case 'open':
+        return baseClasses + "bg-green-500/10 text-green-400 hover:bg-green-500/20 cursor-pointer";
+      case 'vol':
+        return baseClasses + "bg-yellow-500/10 text-yellow-400 cursor-pointer";
+      case 'dicht':
+        return baseClasses + "bg-red-500/10 text-red-400 cursor-pointer";
+      default:
+        return baseClasses + "text-white hover:bg-white/10";
+    }
+  };
+
+  const handleDateClick = (date) => {
+    const newDate = new Date(
+      currentMonth.getFullYear(),
+      currentMonth.getMonth(),
+      date
+    );
+    newDate.setHours(0, 0, 0, 0);
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (newDate < today) return;
+
+    setSelectedDate(newDate);
+    const formattedDate = formatDate(newDate);
+    onChange({ target: { value: formattedDate, name: 'date' } });
+    setShowCalendar(false);
+  };
+
+  const handleMonthChange = (increment) => {
+    const newMonth = new Date(
+      currentMonth.getFullYear(),
+      currentMonth.getMonth() + increment,
+      1
+    );
+    setCurrentMonth(newMonth);
+  };
 
   const daysInMonth = (date) => {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -27,56 +125,6 @@ const CustomDatePicker = ({
 
   const startDayOfMonth = (date) => {
     return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
-  };
-
-  const formatDate = (date) => {
-    return date.toISOString().split('T')[0];
-  };
-
-  const isDateDisabled = (date) => {
-    const today = new Date();
-    const compareDate = new Date(date);
-    compareDate.setHours(0, 0, 0, 0);
-    today.setHours(0, 0, 0, 0);
-    
-    // Allow today's date, but disable past dates
-    if (compareDate < today) return true;
-    
-    // Check maximum date
-    if (max && formatDate(date) > max) return true;
-    
-    // If workingDates is provided, check if the date is available
-    if (workingDates.length > 0) {
-      return !workingDates.some(workingDate => 
-        workingDate.date === formatDate(date) && !workingDate.isHoliday
-      );
-    }
-    
-    return false;
-  };
-
-  const handleDateClick = (date) => {
-    // Create date at noon to avoid timezone issues
-    const newDate = new Date(
-      currentMonth.getFullYear(),
-      currentMonth.getMonth(),
-      date,
-      12, 0, 0
-    );
-    
-    if (!isDateDisabled(newDate)) {
-      setSelectedDate(newDate);
-      onChange({ target: { value: formatDate(newDate) } });
-      setShowCalendar(false);
-    }
-  };
-
-  const handleMonthChange = (increment) => {
-    setCurrentMonth(new Date(
-      currentMonth.getFullYear(),
-      currentMonth.getMonth() + increment,
-      1
-    ));
   };
 
   const renderCalendarDays = () => {
@@ -96,28 +144,24 @@ const CustomDatePicker = ({
         currentMonth.getMonth(),
         day
       );
-      const isDisabled = isDateDisabled(date);
+      date.setHours(0, 0, 0, 0);
+      
       const isSelected = selectedDate && 
         selectedDate.getDate() === day && 
         selectedDate.getMonth() === currentMonth.getMonth() &&
         selectedDate.getFullYear() === currentMonth.getFullYear();
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const isPast = date < today;
 
       days.push(
         <button
           key={day}
           type="button"
           onClick={() => handleDateClick(day)}
-          disabled={isDisabled}
-          className={`h-10 w-10 rounded-lg flex items-center justify-center
-            transition-all duration-300 relative
-            ${isDisabled 
-              ? 'text-white/20 cursor-not-allowed' 
-              : 'hover:bg-white/10'
-            }
-            ${isSelected 
-              ? 'bg-blue-500 text-white hover:bg-blue-600' 
-              : 'text-white'
-            }`}
+          disabled={isPast}
+          className={getDateClasses(date, isSelected)}
         >
           {day}
         </button>
@@ -169,7 +213,6 @@ const CustomDatePicker = ({
           <div className="absolute left-0 right-0 mt-2 p-4 bg-black/90 backdrop-blur-xl
             border border-white/[0.08] rounded-2xl shadow-xl z-50">
             
-            {/* Calendar Header */}
             <div className="flex items-center justify-between mb-4">
               <button
                 type="button"
@@ -192,7 +235,6 @@ const CustomDatePicker = ({
               </button>
             </div>
 
-            {/* Calendar Grid */}
             <div className="grid grid-cols-7 gap-1 text-center mb-2">
               {['Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za'].map(day => (
                 <div key={day} className="text-sm text-white/60 font-medium">
@@ -203,6 +245,21 @@ const CustomDatePicker = ({
             
             <div className="grid grid-cols-7 gap-1">
               {renderCalendarDays()}
+            </div>
+
+            <div className="mt-4 pt-4 border-t border-white/[0.08] grid grid-cols-3 gap-2 text-sm">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-green-500/10" />
+                <span className="text-green-400">Open</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-yellow-500/10" />
+                <span className="text-yellow-400">Vol</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500/10" />
+                <span className="text-red-400">Dicht</span>
+              </div>
             </div>
           </div>
         </>
